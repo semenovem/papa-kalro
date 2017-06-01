@@ -1,0 +1,17 @@
+.cmp-client-create-tel-li {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.cmp-client-create-tel-li div:first-child {
+    margin-right: 20px;
+}
+
+.cmp-client-create-tel-li-remove-icon {
+    opacity: 0.3;
+}
+.cmp-client-create-tel-li-remove-icon:hover {
+    opacity: 1;
+}
+

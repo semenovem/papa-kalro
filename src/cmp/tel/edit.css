@@ -1,0 +1,17 @@
+.cmp-tel-edit-li {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.cmp-tel-edit-li div:first-child {
+    margin-right: 20px;
+}
+
+.cmp-tel-edit-li-remove-icon {
+    opacity: 0.3;
+}
+.cmp-tel-edit-li-remove-icon:hover {
+    opacity: 1;
+}
+
