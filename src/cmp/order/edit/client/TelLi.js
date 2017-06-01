@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import OrderEditClientTel from '../../../tel/Edit';
+import OrderEditClientTel from '../../../telLi/Edit';
 
 /**
  * Редактирование номеров телефонов
  */
-class Tel extends Component {
+class TelLi extends Component {
 
     /**
      * Обработчик изменений данных
@@ -40,6 +40,6 @@ export default connect(
             value: telLi
         }),
     })
-)(Tel);
+)(TelLi);
 
 

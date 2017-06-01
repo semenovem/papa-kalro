@@ -55,7 +55,6 @@ export default function (state = initialState, action) {
          * создает номер телефона
          */
         case 'ORDER.EDIT.CLIENT.TEL.CREATE':
-            console.log(action)
             return {
                 ...state,
                 client: {

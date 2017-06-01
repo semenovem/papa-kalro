@@ -1,28 +1,24 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+import TelCreate from '../../../tel/Create';
+import { createOrderEditClient as actionOrderEditClientTelCreate } from '../../../../actions/tel/base';
+
 
 /**
  * Создание нового телефонного номера
  */
-class TelCreate extends Component {
+class ClientTelCreate extends Component {
 
     /**
      * Обработчик создание нового телефонного номера
      */
-    onCreateTel = (tel) => {
-        this.props.createTel(tel);
+    onCreateTel = () => {
+        this.props.createTel();
     };
 
     render() {
         return (
-            <FloatingActionButton
-                mini={true}
-                onTouchTap={this.onCreateTel}
-            >
-                <ContentAdd/>
-            </FloatingActionButton>
+            <TelCreate onCreate={this.onCreateTel}/>
         )
     }
 }
@@ -30,14 +26,11 @@ class TelCreate extends Component {
 export default connect(
     state => ({}),
     dispatch => ({
-
         /**
          * Создает новый номер телефона
          */
-        createTel: (tel) => dispatch({
-            type: 'ORDER.EDIT.CLIENT.TEL.CREATE',
-            value: tel
-        })
+        createTel: () => dispatch(actionOrderEditClientTelCreate)
 
     })
-)(TelCreate);
+)(ClientTelCreate);
+

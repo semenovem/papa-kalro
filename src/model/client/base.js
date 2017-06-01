@@ -14,22 +14,26 @@ export default function ModelClientBase(data) {
          * @namespace ModelClientBase
          * @typedef ModelClientBase
          */
-        return {
+        const obj = {
             /**
              * @type Number
              */
-            id: 0,
+            id: data.id,
 
             /**
              * @type String
              */
-            fio: '',
+            fio: data.fio || '',
 
             /**
              * @type ModelTelBase.id[] id номеров телефонов
              */
-            telLi: [],
-        }
+            telLi: data.telLi || [],
+        };
+
+
+
+        return obj;
     }
     catch(event) {
         Exception({

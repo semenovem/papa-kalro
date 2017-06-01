@@ -31,12 +31,12 @@ export default function ModelOrderBase(data) {
             /**
              * @type ModelClientBase
              */
-            client: ModelClientBase.apply(null, data ? [data.client] : undefined),
+            client: ModelClientBase.apply(null, data && [data.client]),
 
             /**
              * @type ModelAddr
              */
-            addr: ModelAddr.apply(null, data ? data.addr : undefined),
+            addr: ModelAddr.apply(null, data && data.addr),
 
             /**
              * @type ModelOrderItem.id[] содержимое заказа клиента
