@@ -1,7 +1,8 @@
+#https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md
+
 
 
 product   одна единица товара/услуги
-
 .... список product для доставки 
 
 

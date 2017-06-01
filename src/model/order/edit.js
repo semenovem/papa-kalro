@@ -4,7 +4,7 @@ import ModelOrderBase from './base';
 /**
  * Новый заказ
  * @constructor
- * @param {*} [data]
+ * @param {Object} data
  * @return ModelOrderEdit
  */
 export default function ModelOrderEdit(data) {

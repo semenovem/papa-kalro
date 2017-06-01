@@ -11,8 +11,8 @@ class TelCreate extends Component {
     /**
      * Обработчик создание нового телефонного номера
      */
-    onCreateTel = () => {
-        this.props.createTel();
+    onCreateTel = (tel) => {
+        this.props.createTel(tel);
     };
 
     render() {
@@ -34,8 +34,9 @@ export default connect(
         /**
          * Создает новый номер телефона
          */
-        createTel: () => dispatch({
-            type: ''
+        createTel: (tel) => dispatch({
+            type: 'ORDER.EDIT.CLIENT.TEL.CREATE',
+            value: tel
         })
 
     })

@@ -1,10 +1,11 @@
 import Exception from '../../core/Exception';
+import {isPositiveAndNotZero as isIntPositiveAndNotZero, isNotZero as isIntNotZero} from '../../validation/int'
 
 /**
  * Номер телефона
  * @constructor
  * @param {*} [data]
- * @return ModelTel
+ * @return ModelTelBase
  */
 export default function ModelTelBase(data) {
 
@@ -13,12 +14,12 @@ export default function ModelTelBase(data) {
          * @namespace ModelTelBase
          * @typedef ModelTelBase
          */
-        return {
+        const obj = {
 
             /**
              * @type Number
              */
-            id: 0,
+            id: data.id,
 
             /**
              * @type String номер телефона
@@ -29,7 +30,9 @@ export default function ModelTelBase(data) {
              * @type String комментарий
              */
             note: ''
-        }
+        };
+
+        return obj;
     }
     catch(event) {
         Exception({
