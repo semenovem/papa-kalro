@@ -15,7 +15,7 @@ import MenuItem from 'material-ui/MenuItem';
  * @param {Function} props.onRemove(ModelTelBase.id) обработчик удаления номера телефона
  * @param {ModelTelBase[]} telLi
  */
-class TelLi extends Component {
+class ClientEdit extends Component {
     /**
      * Изменение номера телефона
      */
@@ -110,6 +110,6 @@ class TelLi extends Component {
     }
 }
 
-export default TelLi;
+export default ClientEdit;
 
 

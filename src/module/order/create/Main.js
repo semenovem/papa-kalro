@@ -4,7 +4,8 @@ import Edit from '../edit/Main';
 import CircularProgress from 'material-ui/CircularProgress';
 import './main.css';
 
-import { create as actionOrderCreate } from '../../../actions/order/base';
+import ModelOrderEdit from '../../../model/order/edit';
+import ModelTelBase from '../../../model/tel/base';
 
 /**
  * Создание новой записи
@@ -51,7 +52,20 @@ export default connect(
          * Создает объект заказа
          */
         createModelOrderEdit: () => {
-            dispatch(actionOrderCreate);
+            dispatch(() => {
+                setTimeout(() => {
+                       dispatch({
+                           type: 'ORDER.EDIT.CREATED',
+                           modelOrderEdit: ModelOrderEdit({
+                               client: {
+                                   telLi: [
+                                       ModelTelBase({ id: -1 })
+                                   ]
+                               }
+                           })
+                       })
+                   }, 1);
+            });
         }
     })
 )(Main);

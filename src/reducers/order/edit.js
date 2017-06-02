@@ -40,18 +40,6 @@ export default function (state = initialState, action) {
             };
 
         /**
-         * изменение данных номера телефона клиента
-         */
-        case 'ORDER.EDIT.CLIENT.TEL.CHANGE':
-            return {
-                ...state,
-                client: {
-                    ...state.client,
-                    telLi: action.value
-                }
-            };
-
-        /**
          * создает номер телефона
          */
         case 'ORDER.EDIT.CLIENT.TEL.CREATE':
@@ -60,6 +48,55 @@ export default function (state = initialState, action) {
                 client: {
                     ...state.client,
                     telLi: [...state.client.telLi, action.value]
+                }
+            };
+
+        /**
+         * изменение номера телефона клиента
+         */
+        case 'ORDER.EDIT.CLIENT.TEL.VALUE.CHANGE':
+            return {
+                ...state,
+                client: {
+                    ...state.client,
+                    telLi: state.client.telLi.map(tel => {
+                        if (action.id === tel.id) {
+                            tel.value = action.value;
+                        }
+                        return tel;
+                    })
+                }
+            };
+
+
+        /**
+         * изменение описания номера телефона клиента
+         */
+        case 'ORDER.EDIT.CLIENT.TEL.NOTE.CHANGE':
+            return {
+                ...state,
+                client: {
+                    ...state.client,
+                    telLi: state.client.telLi.map(tel => {
+                        if (action.id === tel.id) {
+                            tel.note = action.note;
+                        }
+                        return tel;
+                    })
+                }
+            };
+
+
+
+        /**
+         * удаление номера телефона клиента
+         */
+        case 'ORDER.EDIT.CLIENT.TEL.REMOVE':
+            return {
+                ...state,
+                client: {
+                    ...state.client,
+                    telLi: state.client.telLi.filter(tel => tel.id !== action.id)
                 }
             };
 

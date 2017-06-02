@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import ClientEdit from '../../../client/Edit';
-import OrderEditClientTelLi from './TelLi';
+import OrderEditClientTel from './Tel';
 import OrderEditClientTelCreate from './TelCreate';
 
 
@@ -27,7 +27,7 @@ class Client extends Component {
                     onChange={this.change}
                 />
 
-                <OrderEditClientTelLi/>
+                <OrderEditClientTel/>
                 <OrderEditClientTelCreate/>
             </div>
         )

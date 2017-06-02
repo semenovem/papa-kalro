@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import TelCreate from '../../../tel/Create';
-import { createOrderEditClient as actionOrderEditClientTelCreate } from '../../../../actions/tel/base';
+import { clientTelCreate } from '../../../../actions/order/edit';
 
 
 /**
@@ -29,7 +29,7 @@ export default connect(
         /**
          * Создает новый номер телефона
          */
-        createTel: () => dispatch(actionOrderEditClientTelCreate)
+        createTel: () => dispatch(clientTelCreate)
 
     })
 )(ClientTelCreate);
