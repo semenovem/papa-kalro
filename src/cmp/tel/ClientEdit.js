@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
-import './edit.css';
+import './client-edit.css';
 import Delete from 'material-ui/svg-icons/action/delete';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -44,7 +44,7 @@ class ClientEdit extends Component {
     prepItems(items) {
         const canRemoved = items.length > 1;
         return items.map((tel) => (
-            <div className="cmp-client-create-tel-li" key={tel.id}>
+            <div className="tel-client-edit" key={tel.id}>
                 <TextField
                     floatingLabelText="телефон"
                     fullWidth={true}
@@ -77,14 +77,14 @@ class ClientEdit extends Component {
         return (
             !value && !note ? <IconButton>
                 <Delete
-                    className="cmp-client-create-tel-li-remove-icon"
+                    className="tel-client-edit-remove-icon"
                     onTouchTap={this.onRemove.bind(this, id)}
                 />
             </IconButton> :
 
                 <IconMenu
                     iconButtonElement={<IconButton>
-                        <Delete className="cmp-client-create-tel-li-remove-icon"/>
+                        <Delete className="tel-client-edit-remove-icon"/>
                     </IconButton>}
                     anchorOrigin={{
                         horizontal: 'left',

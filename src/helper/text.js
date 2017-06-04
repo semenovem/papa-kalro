@@ -33,7 +33,7 @@ export function cutDigit(text) {
 }
 
 /**
- * Оставляет только кириллические символы
+ * Оставляет только кириллические символы и пробельные символы
  * @param text
  */
 export function leaveCyrillic(text) {

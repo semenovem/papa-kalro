@@ -4,14 +4,14 @@ import Exception from '../../core/Exception';
  * Единица товара/услуги
  * @constructor
  * @param {*} [data]
- * @return ModelProduct
+ * @return ModelProductBase
  */
-export default function ModelProduct(data) {
+export default function ModelProductBase(data) {
 
     try {
         /**
-         * @namespace ModelProduct
-         * @typedef ModelProduct
+         * @namespace ModelProductBase
+         * @typedef ModelProductBase
          */
         return {
             /**
@@ -47,12 +47,12 @@ export default function ModelProduct(data) {
             /**
              * @type String
              */
-            type: 'service',
+            type: '',
 
             /**
              * @type String
              */
-            section: 'delivery'
+            section: ''
         }
     }
     catch(event) {
@@ -67,10 +67,10 @@ export default function ModelProduct(data) {
  * список типов
  * @type String[]
  */
-const typeLi = ['service', 'commodity'];
+const typeLi = ['SERVICE', 'COMMODITY'];
 
 /**
  * Список разделов
  * @type String[]
  */
-const sectionLi = ['delivery', 'assembly'];
+const sectionLi = ['DELIVERY', 'ASSEMBLY'];

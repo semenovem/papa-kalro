@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import OrderList from '../module/OrderList';
-import OrderCreate from '../module/OrderCreate';
 
-
-import Order_Create from '../module/order/create/Main';
+import OrderCreate from '../module/order/create/Main';
 
 class Content extends Component {
 
@@ -20,12 +17,11 @@ class Content extends Component {
 
     render() {
         switch (this.props.menu.path) {
-            case 'orderList': return <OrderList />;
-            case 'orderNew': return <Order_Create />;
-            //case 'orderNew': return <OrderCreate />;
+       //     case 'orderList': return <OrderList />;
+            case 'orderNew': return <OrderCreate />;
 
 
-            default: return <div></div>;
+            default: return <div>nothing</div>;
         }
     }
 }

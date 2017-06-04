@@ -3,7 +3,7 @@ import Exception from '../../core/Exception';
 /**
  * Единица заказа, то, что заказал клиент
  * @constructor
- * @param {*} [data]
+ * @param {*} data
  * @return ModelOrderItem
  */
 export default function ModelOrderItem(data) {
@@ -17,32 +17,32 @@ export default function ModelOrderItem(data) {
             /**
              * @type Number
              */
-            id: 0,
+            id: data.id,
 
             /**
-             * @type ModelProduct.id
+             * @type ModelProductBase.id
              */
-            idProduct: 0,
+            productId: data.productId,
 
             /**
              * @type Number кол-во
              */
-            qty: 0,
+            qty: data.qty || 0,
 
             /**
              * @type String примечание
              */
-            note: '',
+            note: data.note || '',
 
             /**
              * @type Number стоимость без скидки
              */
-            cost: 0,
+            cost: data.cost || 0,
 
             /**
              * @type Number скидка
              */
-            discount: 0,
+            discount: data.discount || 0,
         }
     }
     catch(event) {

@@ -1,5 +1,5 @@
 import Exception from '../../core/Exception';
-import {isPositiveAndNotZero as isIntPositiveAndNotZero, isNotZero as isIntNotZero} from '../../validation/int'
+//import {isPositiveAndNotZero as isIntPositiveAndNotZero, isNotZero as isIntNotZero} from '../../validation/int'
 
 /**
  * Номер телефона

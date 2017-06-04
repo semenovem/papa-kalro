@@ -4,16 +4,16 @@ import Exception from '../../core/Exception';
  * Адрес
  * @constructor
  * @param {*} [data]
- * @return ModelAddr
+ * @return ModelAddrBase
  */
-export default function ModelAddr(data) {
+export default function ModelAddrBase(data) {
 
     try {
         /**
-         * @namespace ModelAddr
-         * @typedef ModelAddr
+         * @namespace ModelAddrBase
+         * @typedef ModelAddrBase
          */
-        return {
+        const obj = {
 
             /**
              * @type Number
@@ -21,7 +21,7 @@ export default function ModelAddr(data) {
             id: 0,
 
             /**
-             * @type String
+             * @type String текстовое написание адреса: город, улица и т.д.
              */
             value: '',
 
@@ -46,9 +46,11 @@ export default function ModelAddr(data) {
                  */
                 long: 0
             }
-        }
+        };
+
+        return obj;
     }
-    catch(event) {
+    catch (event) {
         Exception({
             event,
             desc: 'Объект не создан'

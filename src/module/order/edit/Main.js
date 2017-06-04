@@ -1,6 +1,6 @@
 import React from 'react';
 import ModuleTitle from '../../../cmp/ModuleTitle';
-import OrderEdit from '../../../cmp/order/edit/Edit';
+import OrderEdit from '../../../cmp/order/edit/Main';
 import './main.css';
 
 const Main = () => {

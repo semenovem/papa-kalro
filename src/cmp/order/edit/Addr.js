@@ -1,49 +1,49 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import Addr from '../../addr/OrderEdit';
 
 /**
  * Редактирование адреса
  */
-class Addr extends Component {
+class OrderAddr extends Component {
 
-    ///**
-    // * Обработчик изменения в поле Номер документа
-    // * @param e
-    // * @param {String} val
-    // */
-    //onChangeSourceDocNum = (e, val) => {
-    //    this.props.changeDocNum(val);
-    //};
+    /**
+     * Обработчик изменения текстового написания
+     * @param {String} value
+     */
+    changeValue = (value) => {
+        this.props.changeLocation({
+            ...this.props.addr,
+            value
+        });
+    };
 
     render() {
         return (
-            <div className={this.props.className}>
-                адрес
-                {/*<TextField*/}
-                    {/*floatingLabelText="Номер документа"*/}
-                    {/*value={this.props.doc.num}*/}
-                    {/*onChange={this.onChangeSourceDocNum}*/}
-                {/*/>*/}
-            </div>
+            <Addr
+                addr={this.props.addr}
+                changeValue={this.changeValue}
+            />
+
         )
     }
 }
 
 export default connect(
     state => ({
-        doc: state.order.edit.doc
+        addr: state.order.edit.addr
     }),
     dispatch => ({
 
         /**
-         * Изменение данных клиента
-         * @param 
+         * Изменение адреса
+         * @param {ModelAddrBase} addr
          */
-        changeDocNum: (val) => dispatch({
-            type: 'ORDER.EDIT.DOC.CLIENT.CHANGE',
-            value: val
+        changeLocation:(addr) => dispatch({
+            type: 'ORDER.EDIT.ADDR.CHANGE',
+            addr
         }),
     })
-)(Addr);
+)(OrderAddr);
 
 

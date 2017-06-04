@@ -1,17 +1,17 @@
-.cmp-tel-edit-li {
+.tel-client-edit {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
 }
 
-.cmp-tel-edit-li div:first-child {
+.tel-client-edit div:first-child {
     margin-right: 20px;
 }
 
-.cmp-tel-edit-li-remove-icon {
+.tel-client-edit-remove-icon {
     opacity: 0.3;
 }
-.cmp-tel-edit-li-remove-icon:hover {
+.tel-client-edit-remove-icon:hover {
     opacity: 1;
 }
 

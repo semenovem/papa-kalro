@@ -1,5 +1,4 @@
-import ModelOrderEdit from '../../model/order/edit';
-import {compressSpacesInside, makeFirstLetterUppercase, trimLeft, leaveCyrillic} from '../../helper/text';
+//import {compressSpacesInside, makeFirstLetterUppercase, trimLeft, leaveCyrillic} from '../../helper/text';
 
 const initialState = {
     has: false
@@ -68,7 +67,6 @@ export default function (state = initialState, action) {
                 }
             };
 
-
         /**
          * изменение описания номера телефона клиента
          */
@@ -86,8 +84,6 @@ export default function (state = initialState, action) {
                 }
             };
 
-
-
         /**
          * удаление номера телефона клиента
          */
@@ -98,6 +94,81 @@ export default function (state = initialState, action) {
                     ...state.client,
                     telLi: state.client.telLi.filter(tel => tel.id !== action.id)
                 }
+            };
+
+        /**
+         * Изменился адрес
+         */
+        case 'ORDER.EDIT.ADDR.CHANGE':
+            return {
+                ...state,
+                addr: action.addr
+            };
+
+        /**
+         * вкл/выкл доставки
+         */
+        case 'ORDER.EDIT.DELIVERY.HAS.CHANGE':
+            return {
+                ...state,
+                delivery: {
+                    ...state.delivery,
+                    has: action.has
+                }
+            };
+
+        /**
+         * изменение комментария к доставке
+         */
+        case 'ORDER.EDIT.DELIVERY.NOTE.CHANGE':
+            return {
+                ...state,
+                delivery: {
+                    ...state.delivery,
+                    note: action.note
+                }
+            };
+
+        /**
+         * вкл/выкл доставки
+         */
+        case 'ORDER.EDIT.ASSEMBLY.HAS.CHANGE':
+            return {
+                ...state,
+                assembly: {
+                    ...state.assembly,
+                    has: action.has
+                }
+            };
+
+        /**
+         * изменение комментария к доставке
+         */
+        case 'ORDER.EDIT.ASSEMBLY.NOTE.CHANGE':
+            return {
+                ...state,
+                assembly: {
+                    ...state.assembly,
+                    note: action.note
+                }
+            };
+
+        /**
+         * Добавляет товар/услугу к заказу
+         */
+        case 'ORDER.EDIT.ITEM.ADD':
+            return {
+                ...state,
+                itemLi:  [...state.itemLi, ...action.itemLiToAdd]
+            };
+
+        /**
+         * Удаляет товар/услугу в заказе
+         */
+        case 'ORDER.EDIT.ITEM.REMOVE':
+            return {
+                ...state,
+                itemLi: state.itemLi.filter(item => !~action.itemLiToRemove.indexOf(item.id))
             };
 
 

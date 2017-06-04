@@ -1,6 +1,6 @@
 import Exception from '../../core/Exception';
 import ModelClientBase from '../client/base';
-import ModelAddr from '../primitive/addr';
+import ModelAddrBase from '../addr/base';
 import ModelOrderDocBase from './doc/base';
 
 /**
@@ -34,14 +34,14 @@ export default function ModelOrderBase(data) {
             client: ModelClientBase.apply(null, data && [data.client]),
 
             /**
-             * @type ModelAddr
+             * @type ModelAddrBase
              */
-            addr: ModelAddr.apply(null, data && data.addr),
+            addr: ModelAddrBase.apply(null, data && data.addr),
 
             /**
              * @type ModelOrderItem.id[] содержимое заказа клиента
              */
-            content: [],
+            itemLi: [],
 
             /**
              * Данные для доставки
