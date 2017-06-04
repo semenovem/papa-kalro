@@ -43,11 +43,16 @@ class Main extends Component {
      * Одна строка в таблице
      * @param {ModelOrderItem} item
      */
-    createRow = (item) => {
+    createRow = (item, index) => {
         const product = this.props.productHash[item.productId];
+
+        // todo добавить css счетчик
         return (
             <TableRow key={item.id}>
-                <TableRowColumn style={this.styleColNum}></TableRowColumn>
+                <TableRowColumn
+                    style={this.styleColNum}
+                    className="order-edit-item-list-main-row-counter"
+                >{++index}</TableRowColumn>
                 <TableRowColumn style={this.styleColName}>{product.name}</TableRowColumn>
                 <TableRowColumn style={this.styleColQt}>1</TableRowColumn>
                 <TableRowColumn style={this.styleColCost}>{product.cost}</TableRowColumn>
