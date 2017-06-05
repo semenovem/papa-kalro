@@ -5,6 +5,9 @@ const Title = ({ title, className }) => {
     return <h3 className={className}>{title}</h3>
 };
 
+/**
+ * Название модуля
+ */
 export default connect(
     state => ({
         title: state.menu.items.filter(item => item.id === state.menu.selectedId)[0].name

@@ -26,6 +26,12 @@ class Main extends Component {
         paddingLeft: '5px',
         paddingRight: '5px',
     };
+    styleColUnit = {
+        paddingLeft: '5px',
+        paddingRight: '5px',
+        width: '50px',
+        textAlign: 'center'
+    };
     styleColQt = {
         paddingLeft: '5px',
         paddingRight: '5px',
@@ -45,6 +51,7 @@ class Main extends Component {
      */
     createRow = (item, index) => {
         const product = this.props.productHash[item.productId];
+        const unit = this.props.unitHash[product.unitId];
 
         // todo добавить css счетчик
         return (
@@ -53,7 +60,8 @@ class Main extends Component {
                     style={this.styleColNum}
                     className="order-edit-item-list-main-row-counter"
                 >{++index}</TableRowColumn>
-                <TableRowColumn style={this.styleColName}>{product.name}</TableRowColumn>
+                <TableRowColumn style={this.styleColName}>{product.nameS}</TableRowColumn>
+                <TableRowColumn style={this.styleColUnit}>{unit.nameS}</TableRowColumn>
                 <TableRowColumn style={this.styleColQt}>1</TableRowColumn>
                 <TableRowColumn style={this.styleColCost}>{product.cost}</TableRowColumn>
             </TableRow>
@@ -79,6 +87,7 @@ class Main extends Component {
                         >№</TableHeaderColumn>
 
                         <TableHeaderColumn style={this.styleColName}>Наименование</TableHeaderColumn>
+                        <TableHeaderColumn style={this.styleColUnit}>Ед.изм.</TableHeaderColumn>
                         <TableHeaderColumn style={this.styleColQt}>Кол-во</TableHeaderColumn>
                         <TableHeaderColumn style={this.styleColCost}>Цена</TableHeaderColumn>
                     </TableRow>
@@ -97,6 +106,7 @@ class Main extends Component {
 export default connect(
     state => ({
         productHash: state.product.hash,
+        unitHash: state.unit.hash
     })
 )(Main);
 

@@ -12,63 +12,69 @@ const initialState = {
     li: [
         {
             id: 1,
-            name: 'По Москве в пределах МКАД, крупногабаритную мебель',
+            nameS: 'По Москве в пределах МКАД, крупногабаритную мебель',
+            nameL: 'По Москве в пределах МКАД, крупногабаритную мебель',
             cost: 1400,
-            unit: 'адрес',
+            unitId: 5,
             type: 'SERVICE',
             section: 'DELIVERY'
         },
         {
             id: 2,
-            name: 'По Москве в пределах МКАД, мелкогабаритную мебель (до 10 кг)',
+            nameS: 'По Москве в пределах МКАД, мелкогабаритную мебель (до 10 кг)',
+            nameL: 'По Москве в пределах МКАД, мелкогабаритную мебель (до 10 кг)',
             cost: 1000,
-            unit: 'адрес',
+            unitId: 5,
             type: 'SERVICE',
             section: 'DELIVERY'
         },
         {
             id: 3,
-            name: 'С выездом за МКАД (прибавляется к доставке в пределах МКАД)',
+            nameS: 'С выездом за МКАД (прибавляется к доставке в пределах МКАД)',
+            nameL: 'С выездом за МКАД (прибавляется к доставке в пределах МКАД)',
             cost: 35,
-            unit: 'км',
+            unitId: 2,
             type: 'SERVICE',
             section: 'DELIVERY'
         },
         {
             id: 4,
-            name: 'Занос в квартиру (первый этаж или на лифте)',
+            nameS: 'Занос в квартиру (первый этаж или на лифте)',
+            nameL: 'Занос в квартиру (первый этаж или на лифте)',
             cost: 300,
-            unit: 'шт',
+            unitId: 1,
             type: 'SERVICE',
             section: 'DELIVERY'
         },
         {
             id: 5,
-            name: 'Подьем без лифта',
+            nameS: 'Подъем без лифта',
+            nameL: 'Подъем без лифта',
             cost: 250,
-            unit: 'этаж',
+            unitId: 3,
             type: 'SERVICE',
             section: 'DELIVERY'
         },
         {
             id: 6,
-            name: 'Пронос товара более 20 метров',
+            nameS: 'Пронос товара более 20 метров',
+            nameL: 'Пронос товара более 20 метров',
             cost: 150,
-            unit: 'каждые 20 метров',
+            unitId: 4,
             type: 'SERVICE',
             section: 'DELIVERY'
         },
         {
             id: 7,
-            name: 'Выезд сборщика за МКАД до 10 км',
+            nameS: 'Выезд сборщика за МКАД до 10 км',
+            nameL: 'Выезд сборщика за МКАД до 10 км',
             cost: 350,
-            unit: 'заказ',
+            unitId: 5,
             type: 'SERVICE',
             section: 'ASSEMBLY'
         },
     ],
 };
-
 
 initialState.li.forEach(product => {
     initialState.hash[product.id] = product;
@@ -77,9 +83,6 @@ initialState.li.forEach(product => {
 initialState.li.forEach(product => {
     initialState.section[product.section][product.id] = product;
 });
-
-
-
 
 export default function(state = initialState, action) {
     //switch (action.type) {

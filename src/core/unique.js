@@ -10,9 +10,7 @@ export default function getUniqueId() {
 }
 
 /**
- * Возврашает уникальную строку
+ * Возвращает уникальную строку
  * @returns String
  */
-export function getUniqueStr() {
-
-}
+export function getUniqueStr() {}

@@ -40,9 +40,9 @@ export default function ModelProductBase(data) {
             cost: 0,
 
             /**
-             * @type ModelUnit.id
+             * @type ModelUnitBase.id
              */
-            unit: 0,
+            unitId: 0,
 
             /**
              * @type String

@@ -58,7 +58,7 @@ class Choice extends Component {
                 insetChildren={true}
                 checked={this.productIdHashSelected[product.id]}
                 value={product.id}
-                primaryText={product.name}
+                primaryText={product.nameS}
             />
         ));
     };

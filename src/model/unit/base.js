@@ -4,31 +4,36 @@ import Exception from '../../core/Exception';
  * Единица измерения
  * @constructor
  * @param {*} [data]
- * @return ModelUnit
+ * @return ModelUnitBase
  */
-export default function ModelUnit(data) {
+export default function ModelUnitBase(data) {
 
     try {
         /**
-         * @namespace ModelUnit
-         * @typedef ModelUnit
+         * @namespace ModelUnitBase
+         * @typedef ModelUnitBase
          */
         return {
 
             /**
              * @type Number
              */
-            id: 0,
+            id: data.id,
 
             /**
              * @type String название сокращенное
              */
-            nameS: '',
+            nameS: data.nameS || '',
 
             /**
              * @type String название полное
              */
-            nameF: '',
+            nameF: data.nameF || '',
+
+            /**
+             * @type String описание единицы измерения
+             */
+            note: data.note || ''
         }
     }
     catch(event) {
