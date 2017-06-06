@@ -14,8 +14,8 @@ const initialState = {
      * Список пунктов меню
      */
     items: [
-        { name: 'Заказы', id: 1, path: 'orderList' },
-        { name: 'Новый Заказ', id: 2, path: 'orderNew' },
+        { name: 'Заказы', id: 1, path: 'order.list' },
+        { name: 'Новый Заказ', id: 2, path: 'order.create' },
         { name: 'Клиенты', id: 3, path: 'clientList' },
         { name: 'Доставки', id: 5, path: 'deliveryList' },
         { name: 'Сборки', id: 7, path: 'assembly' },
