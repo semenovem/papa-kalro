@@ -40,6 +40,11 @@ export default function ModelOrderEdit(data) {
             isNew: false,
 
             /**
+             * @type Boolean валидность данных
+             */
+            isValid: false,
+
+            /**
              * Флаг для проверки, в reducer - в state объект с данными или пустая заглушка начального состояния
              */
             has: true,

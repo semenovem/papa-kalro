@@ -59,7 +59,8 @@ export default connect(
                 type: 'ORDER.EDIT.ITEM.ADD',
                 itemLiToAdd: productIdLi.map(productId => ModelOrderItem({
                     id: getUniqueId(),
-                    productId
+                    productId,
+                    qty: 1
                 }))
             })
         },

@@ -8,15 +8,26 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import {format as moneyFormat} from '../../../../helper/money';
+import Popover from 'material-ui/Popover';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
 
 /**
  * Показывает список выбранных товаров/услуг
  * @param {ModelOrderItem[]} props.itemLi
- *
+ * @param {Function} props.changeQty обработчик изменения кол-ва
+ * 
  *
  */
 class Main extends Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            qtyOpen: false,
+            qtyAnchorEl: null
+        }
+    }
     styleColNum = {
         paddingLeft: '5px',
         paddingRight: '5px',
@@ -32,7 +43,7 @@ class Main extends Component {
         width: '50px',
         textAlign: 'center'
     };
-    styleColQt = {
+    styleColQty = {
         paddingLeft: '5px',
         paddingRight: '5px',
         width: '50px',
@@ -46,6 +57,37 @@ class Main extends Component {
     };
 
     /**
+     * Обработчик клика по таблице
+     * @param rowKey
+     * @param colKey
+     * @param event
+     */
+    onCellClick = (rowKey, colKey, event) => {
+        this.itemSelected = this.props.itemLi[rowKey];
+
+        if (colKey !== 4) return;
+
+        this.setState({
+            qtyOpen: true,
+            qtyAnchorEl: event.currentTarget
+        })
+
+    };
+
+
+    handleRequestClose = () => {
+        this.itemSelected = null;
+      this.setState({
+          qtyOpen: false,
+      });
+    };
+
+    editQty = () => {
+        this.props.changeQty()
+    };
+
+
+    /**
      * Одна строка в таблице
      * @param {ModelOrderItem} item
      */
@@ -56,30 +98,30 @@ class Main extends Component {
         // todo добавить css счетчик
         return (
             <TableRow key={item.id}>
+
                 <TableRowColumn
                     style={this.styleColNum}
                     className="order-edit-item-list-main-row-counter"
-                >{++index}</TableRowColumn>
+                >{index + 1}</TableRowColumn>
+
                 <TableRowColumn style={this.styleColName}>{product.nameS}</TableRowColumn>
                 <TableRowColumn style={this.styleColUnit}>{unit.nameS}</TableRowColumn>
-                <TableRowColumn style={this.styleColQt}>1</TableRowColumn>
-                <TableRowColumn style={this.styleColCost}>{product.cost}</TableRowColumn>
+
+                <TableRowColumn style={this.styleColQty}>
+                    {item.qty}
+                </TableRowColumn>
+
+                <TableRowColumn style={this.styleColCost}>
+                    {moneyFormat('', product.cost)}
+                </TableRowColumn>
             </TableRow>
         )
     };
 
-    /**
-     * Создает строки таблицы
-     * @param {ModelOrderItem[]} itemLi
-     * @returns {Array}
-     */
-    createRowLi(itemLi) {
-        return itemLi.map(this.createRow);
-    }
-
     render() {
         return (
-            <Table>
+            <div>
+            <Table onCellClick={this.onCellClick}>
                 <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                     <TableRow>
                         <TableHeaderColumn
@@ -88,17 +130,41 @@ class Main extends Component {
 
                         <TableHeaderColumn style={this.styleColName}>Наименование</TableHeaderColumn>
                         <TableHeaderColumn style={this.styleColUnit}>Ед.изм.</TableHeaderColumn>
-                        <TableHeaderColumn style={this.styleColQt}>Кол-во</TableHeaderColumn>
+                        <TableHeaderColumn style={this.styleColQty}>Кол-во</TableHeaderColumn>
                         <TableHeaderColumn style={this.styleColCost}>Цена</TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
 
                 {this.props.itemLi.length &&
                 <TableBody displayRowCheckbox={false}>
-                    {this.createRowLi(this.props.itemLi)}
+                    {this.props.itemLi.map(this.createRow)}
                 </TableBody>
                 }
             </Table>
+
+
+                
+                <Popover
+                    open={this.state.qtyOpen}
+                    anchorEl={this.state.qtyAnchorEl}
+                    anchorOrigin={{
+                        horizontal: 'left',
+                        vertical: 'bottom'
+                    }}
+                    targetOrigin={{
+                        horizontal: 'left',
+                        vertical: 'top'
+                    }}
+                    onRequestClose={this.handleRequestClose}
+                >
+                    <Menu>
+                        <MenuItem primaryText="1"/>
+                        <MenuItem primaryText="2"/>
+                        <MenuItem primaryText="3"/>
+                        <MenuItem primaryText="Sign out"/>
+                    </Menu>
+                </Popover>
+            </div>
         )
     }
 }

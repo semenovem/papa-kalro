@@ -16,6 +16,15 @@ import Paper from 'material-ui/Paper';
 class Edit extends Component {
 
     /**
+     * валидация данных
+     * @param {ModelOrderEdit} props.edit
+     */
+    componentWillReceiveProps(props) {
+
+        // валидатор данных
+    }
+
+    /**
      * Обработчик чекбока включения/выключения доставки
      * @param e
      * @param {Boolean} check
@@ -34,7 +43,6 @@ class Edit extends Component {
     };
 
     render() {
-
         const deliveryEl = [
             <Checkbox
                 key="0"
@@ -59,8 +67,6 @@ class Edit extends Component {
             this.props.assemblyHas && <OrderEditAssembly className="indent-top-l" key="1"/>
         ];
 
-
-
         return (
             <div className={this.props.className}>
                 <OrderEditDoc/>
@@ -77,23 +83,12 @@ class Edit extends Component {
                 {this.props.assemblyHas ?
                     <Paper className="indent-top-l indent-in-m" children={assemblyEl}/> : assemblyEl}
 
-
-                {/*<Checkbox*/}
-                    {/*className="indent-top-l"*/}
-                    {/*label="Сборка"*/}
-                    {/*style={{}}*/}
-                    {/*onCheck={this.onChangeAssemblyHas}*/}
-                    {/*checked={this.props.assemblyHas}*/}
-                {/*/>*/}
-                {/*{this.props.assemblyHas && <OrderEditAssembly className="indent-top-l"/>}*/}
-
-
                 <div className="indent-top-l">
                     <RaisedButton
                         label="Сохранить"
                         primary={true}
                         style={{}}
-                        disabled={true}
+                        disabled={false}
                         onTouchTap={() => { console.log('tap') }}
                     />
                 </div>
@@ -106,9 +101,9 @@ export default connect(
     state => ({
         deliveryHas: state.order.edit.delivery.has,
         assemblyHas: state.order.edit.assembly.has,
+        edit: state.order.edit
     }),
     dispatch => ({
-
         /**
          * Изменение состояния вкл/выкл доставка
          * @param {Boolean} has
@@ -126,7 +121,5 @@ export default connect(
             type: 'ORDER.EDIT.ASSEMBLY.HAS.CHANGE',
             has
         })
-        
-
     })
 )(Edit);

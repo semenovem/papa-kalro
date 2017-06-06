@@ -35,7 +35,8 @@ export default function ModelProductBase(data) {
             description: '',
 
             /**
-             * Цена товара/услуги
+             * @type Number Цена товара/услуги
+             * цена указана в копейках.
              */
             cost: 0,
 
