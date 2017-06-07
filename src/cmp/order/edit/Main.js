@@ -43,6 +43,9 @@ class Edit extends Component {
     };
 
     render() {
+
+        console.log('edit', this.props.edit);
+
         const deliveryEl = [
             <Checkbox
                 key="0"

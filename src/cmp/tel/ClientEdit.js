@@ -52,7 +52,7 @@ class ClientEdit extends Component {
                     onChange={this.onChangeValue.bind(this, tel.id)}
                 />
                 <TextField
-                    hintText="Описание"
+                    floatingLabelText="Описание"
                     multiLine={true}
                     rows={1}
                     rowsMax={2}

@@ -1,7 +1,7 @@
 import Exception from '../../core/Exception';
 import ModelClientBase from '../client/base';
 import ModelAddrBase from '../addr/base';
-import ModelOrderDocBase from './doc/base';
+import ModelOrderDocBase, {valid as validDoc} from './doc/base';
 
 /**
  * Заказ
@@ -26,7 +26,7 @@ export default function ModelOrderBase(data) {
             /**
              * Исходные документы
              */
-            doc: ModelOrderDocBase(),
+            doc: ModelOrderDocBase(data),
 
             /**
              * @type ModelClientBase
@@ -66,8 +66,6 @@ export default function ModelOrderBase(data) {
             }
         };
 
-        
-
         return obj;
     }
     catch(event) {
@@ -76,4 +74,15 @@ export default function ModelOrderBase(data) {
             desc: 'Объект не создан'
         });
     }
+}
+
+/**
+ * Валидация
+ * @param {ModelOrderBase} obj
+ * @returns {Boolean}
+ */
+export function valid(obj) {
+    return validDoc(obj.doc).length > 1;
+
+    
 }

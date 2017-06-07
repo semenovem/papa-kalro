@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-//import OrderList from '../module/order/list/Main';
+import OrderList from '../module/order/list/Main';
 import OrderCreate from '../module/order/create/Main';
 
 class Content extends Component {
@@ -17,9 +17,8 @@ class Content extends Component {
 
     render() {
         switch (this.props.menu.path) {
-            //case 'order.list': return <OrderList />;
+            case 'order.list': return <OrderList />;
             case 'order.create': return <OrderCreate />;
-
 
             default: return <div>nothing</div>;
         }

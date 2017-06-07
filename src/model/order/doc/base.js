@@ -31,3 +31,12 @@ export default function ModelOrderDocBase(data) {
         });
     }
 }
+
+/**
+ * Валидация
+ * @param {ModelOrderDocBase} obj
+ * @returns {Boolean}
+ */
+export function valid(obj) {
+    return obj.num.length > 1;
+}

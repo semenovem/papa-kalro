@@ -5,12 +5,15 @@ const initialState = {
 };
 
 /**
+ * Изменения в данных
  *
+ * при каждом изменени в данных редюсер валидирует данные
  * @param state
  * @param action
  * @returns {*}
  */
 export default function (state = initialState, action) {
+    let newState;
 
     switch (action.type) {
 
@@ -18,43 +21,47 @@ export default function (state = initialState, action) {
          * создана новая запись
          */
         case 'ORDER.EDIT.CREATED':
-            return action.modelOrderEdit;
+            newState = action.modelOrderEdit;
+            break;
 
         /**
          * изменение номера документа
          */
         case 'ORDER.EDIT.DOC.CHANGE':
-            return {
+            newState = {
                 ...state,
                 doc: action.doc
             };
+            break;
 
         /**
          * изменение данных клиента
          */
         case 'ORDER.EDIT.CLIENT.CHANGE':
-            return {
+            newState = {
                 ...state,
                 client: action.value
             };
+            break;
 
         /**
          * создает номер телефона
          */
         case 'ORDER.EDIT.CLIENT.TEL.CREATE':
-            return {
+            newState = {
                 ...state,
                 client: {
                     ...state.client,
                     telLi: [...state.client.telLi, action.value]
                 }
             };
+            break;
 
         /**
          * изменение номера телефона клиента
          */
         case 'ORDER.EDIT.CLIENT.TEL.VALUE.CHANGE':
-            return {
+            newState = {
                 ...state,
                 client: {
                     ...state.client,
@@ -66,12 +73,13 @@ export default function (state = initialState, action) {
                     })
                 }
             };
+            break;
 
         /**
          * изменение описания номера телефона клиента
          */
         case 'ORDER.EDIT.CLIENT.TEL.NOTE.CHANGE':
-            return {
+            newState = {
                 ...state,
                 client: {
                     ...state.client,
@@ -83,107 +91,117 @@ export default function (state = initialState, action) {
                     })
                 }
             };
+            break;
 
         /**
          * удаление номера телефона клиента
          */
         case 'ORDER.EDIT.CLIENT.TEL.REMOVE':
-            return {
+            newState = {
                 ...state,
                 client: {
                     ...state.client,
                     telLi: state.client.telLi.filter(tel => tel.id !== action.id)
                 }
             };
+            break;
 
         /**
          * Изменился адрес
          */
         case 'ORDER.EDIT.ADDR.CHANGE':
-            return {
+            newState = {
                 ...state,
                 addr: action.addr
             };
+            break;
 
         /**
          * вкл/выкл доставки
          */
         case 'ORDER.EDIT.DELIVERY.HAS.CHANGE':
-            return {
+            newState = {
                 ...state,
                 delivery: {
                     ...state.delivery,
                     has: action.has
                 }
             };
+            break;
 
         /**
          * изменение комментария к доставке
          */
         case 'ORDER.EDIT.DELIVERY.NOTE.CHANGE':
-            return {
+            newState = {
                 ...state,
                 delivery: {
                     ...state.delivery,
                     note: action.note
                 }
             };
+            break;
 
         /**
          * вкл/выкл доставки
          */
         case 'ORDER.EDIT.ASSEMBLY.HAS.CHANGE':
-            return {
+            newState = {
                 ...state,
                 assembly: {
                     ...state.assembly,
                     has: action.has
                 }
             };
+            break;
 
         /**
          * изменение комментария к доставке
          */
         case 'ORDER.EDIT.ASSEMBLY.NOTE.CHANGE':
-            return {
+            newState = {
                 ...state,
                 assembly: {
                     ...state.assembly,
                     note: action.note
                 }
             };
+            break;
 
         /**
          * Добавляет товар/услугу к заказу
          */
         case 'ORDER.EDIT.ITEM.ADD':
-            return {
+            newState = {
                 ...state,
                 itemLi:  [...state.itemLi, ...action.itemLiToAdd]
             };
+            break;
 
         /**
          * Удаляет товар/услугу в заказе
          */
         case 'ORDER.EDIT.ITEM.REMOVE':
-            return {
+            newState = {
                 ...state,
                 itemLi: state.itemLi.filter(item => !~action.itemLiToRemove.indexOf(item.id))
             };
+            break;
 
-
-
-
-
-
-
-
-
-
-
-        default: break;
+        default: newState = state;
     }
-    return state;
+
+
+    // валидадация данных, поле isValid
+    if (newState !== state) {
+        console.log('newState');
+
+
+
+    }
+    
+
+    return newState;
 }
 
 

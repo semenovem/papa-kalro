@@ -10,15 +10,12 @@ import {
 } from 'material-ui/Table';
 import {format as moneyFormat} from '../../../../helper/money';
 import Popover from 'material-ui/Popover';
-import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
+import ListValueSingle from '../../../choice/ListValueSingle';
 
 /**
  * Показывает список выбранных товаров/услуг
  * @param {ModelOrderItem[]} props.itemLi
  * @param {Function} props.changeQty обработчик изменения кол-ва
- * 
- *
  */
 class Main extends Component {
     constructor(props) {
@@ -82,6 +79,7 @@ class Main extends Component {
       });
     };
 
+
     editQty = () => {
         this.props.changeQty()
     };
@@ -121,29 +119,27 @@ class Main extends Component {
     render() {
         return (
             <div>
-            <Table onCellClick={this.onCellClick}>
-                <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-                    <TableRow>
-                        <TableHeaderColumn
-                            style={this.styleColNum}
-                        >№</TableHeaderColumn>
+                <Table onCellClick={this.onCellClick}>
+                    <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                        <TableRow>
+                            <TableHeaderColumn
+                                style={this.styleColNum}
+                            >№</TableHeaderColumn>
 
-                        <TableHeaderColumn style={this.styleColName}>Наименование</TableHeaderColumn>
-                        <TableHeaderColumn style={this.styleColUnit}>Ед.изм.</TableHeaderColumn>
-                        <TableHeaderColumn style={this.styleColQty}>Кол-во</TableHeaderColumn>
-                        <TableHeaderColumn style={this.styleColCost}>Цена</TableHeaderColumn>
-                    </TableRow>
-                </TableHeader>
+                            <TableHeaderColumn style={this.styleColName}>Наименование</TableHeaderColumn>
+                            <TableHeaderColumn style={this.styleColUnit}>Ед.изм.</TableHeaderColumn>
+                            <TableHeaderColumn style={this.styleColQty}>Кол-во</TableHeaderColumn>
+                            <TableHeaderColumn style={this.styleColCost}>Цена</TableHeaderColumn>
+                        </TableRow>
+                    </TableHeader>
 
-                {this.props.itemLi.length &&
-                <TableBody displayRowCheckbox={false}>
-                    {this.props.itemLi.map(this.createRow)}
-                </TableBody>
-                }
-            </Table>
+                    {this.props.itemLi.length &&
+                    <TableBody displayRowCheckbox={false}>
+                        {this.props.itemLi.map(this.createRow)}
+                    </TableBody>
+                    }
+                </Table>
 
-
-                
                 <Popover
                     open={this.state.qtyOpen}
                     anchorEl={this.state.qtyAnchorEl}
@@ -157,12 +153,9 @@ class Main extends Component {
                     }}
                     onRequestClose={this.handleRequestClose}
                 >
-                    <Menu>
-                        <MenuItem primaryText="1"/>
-                        <MenuItem primaryText="2"/>
-                        <MenuItem primaryText="3"/>
-                        <MenuItem primaryText="Sign out"/>
-                    </Menu>
+                    <ListValueSingle
+                        valueLi={[1, 2, 3]}
+                    />
                 </Popover>
             </div>
         )

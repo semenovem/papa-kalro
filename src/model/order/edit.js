@@ -21,7 +21,7 @@ export default function ModelOrderEdit(data) {
 
             delivery: {
                 ...base.delivery,
-                has: false
+                has: true   // todo изменить на false
             },
 
             assembly: {
