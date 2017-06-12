@@ -13,65 +13,130 @@ export default function ModelProductBase(data) {
          * @namespace ModelProductBase
          * @typedef ModelProductBase
          */
-        return {
+        const obj = {
             /**
-             * @type number
+             * @type Number
+             * целое, > 0
              */
-            id: 0,
+            id: data.id,
 
             /**
              * @type String название товара / услуги сокращенное
+             * val.length > 1
              */
-            nameS: '',
+            nameS: data.nameS,
 
             /**
              * @type String название товара / услуги полное
+             * val.length > 1
              */
-            nameF: '',
+            nameF: data.nameF,
 
             /**
              * @type String описание товара/услуги
              */
-            description: '',
+            desc: data.desc,
 
             /**
-             * @type Number Цена товара/услуги
-             * цена указана в копейках.
+             * @type Number Цена товара/услуги. Цена указана в копейках.
+             * целое, >= 0
              */
-            cost: 0,
+            cost: data.cost,
 
             /**
              * @type ModelUnitBase.id
              */
-            unitId: 0,
+            unitId: data.unitId,
 
             /**
              * @type String
              */
-            type: '',
+            type: data.type,
 
             /**
              * @type String
              */
-            section: ''
-        }
+            section: data.section
+        };
+
+        verify(obj);
+
+        return obj;
     }
     catch(event) {
-        Exception({
-            event,
-            desc: 'Объект не создан'
+        Exception(event, {
+            desc: 'Объект ModelProductBase не создан',
+            data
         });
     }
 }
 
 /**
- * список типов
- * @type String[]
+ * Валидация
+ * @param {ModelProductBase} model
+ * @returns Boolean
  */
-const typeLi = ['SERVICE', 'COMMODITY'];
+export function valid(model) {
+    return true;
+}
 
 /**
- * Список разделов
- * @type String[]
+ * Верификация
+ * @param {ModelProductBase} model
+ * @throws {Exception}
  */
-const sectionLi = ['DELIVERY', 'ASSEMBLY'];
+export const verify = function _f(model) {
+    let field;
+
+    for (field in model) {
+        if (!model.hasOwnProperty(field) || typeof _f[field] !== 'function') {
+            return;
+        }
+        try {
+           _f[field](model[field]);
+        }
+        catch (event) {
+            Exception(event, 'Исключение при верификации поля: ' + field);
+            throw event;
+        }
+    }
+};
+
+/**
+ * Верификация поля в модели id
+ * @param {*} id
+ * @throws {Exception}
+ */
+verify.id = function(id) {
+    !isFinite(id) && Exception({
+        desc: 'значение должно быть числом'
+    });
+
+    id <= 0 && Exception({
+        desc: 'должно быть больше 0'
+    });
+};
+
+
+
+
+
+
+
+
+
+
+///**
+// * список типов
+// * @type String[]
+// */
+//const typeLi = ['SERVICE', 'COMMODITY'];
+//
+///**
+// * Список разделов
+// * @type String[]
+// */
+//const sectionLi = ['DELIVERY', 'ASSEMBLY'];
+
+
+

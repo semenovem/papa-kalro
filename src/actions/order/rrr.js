@@ -10,6 +10,8 @@ const ROM = {
  * Пеобразование римских цифр в десятичную систему
  * @param {String} str
  * @returns Number
+ *
+ * @example 'XIV'
  */
 function rom (str) {
     let preVal,

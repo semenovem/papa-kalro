@@ -1,3 +1,5 @@
+import ModelProductBase from '../model/product/base';
+
 const initialState = {
     hash: {},
 
@@ -13,7 +15,7 @@ const initialState = {
         {
             id: 1,
             nameS: 'По Москве в пределах МКАД, крупногабаритную мебель',
-            nameL: 'По Москве в пределах МКАД, крупногабаритную мебель',
+            nameF: 'По Москве в пределах МКАД, крупногабаритную мебель',
             cost: 140000,
             unitId: 5,
             type: 'SERVICE',
@@ -22,7 +24,7 @@ const initialState = {
         {
             id: 2,
             nameS: 'По Москве в пределах МКАД, мелкогабаритную мебель (до 10 кг)',
-            nameL: 'По Москве в пределах МКАД, мелкогабаритную мебель (до 10 кг)',
+            nameF: 'По Москве в пределах МКАД, мелкогабаритную мебель (до 10 кг)',
             cost: 100000,
             unitId: 5,
             type: 'SERVICE',
@@ -31,7 +33,7 @@ const initialState = {
         {
             id: 3,
             nameS: 'С выездом за МКАД (прибавляется к доставке в пределах МКАД)',
-            nameL: 'С выездом за МКАД (прибавляется к доставке в пределах МКАД)',
+            nameF: 'С выездом за МКАД (прибавляется к доставке в пределах МКАД)',
             cost: 3500,
             unitId: 2,
             type: 'SERVICE',
@@ -40,7 +42,7 @@ const initialState = {
         {
             id: 4,
             nameS: 'Занос в квартиру (первый этаж или на лифте)',
-            nameL: 'Занос в квартиру (первый этаж или на лифте)',
+            nameF: 'Занос в квартиру (первый этаж или на лифте)',
             cost: 30000,
             unitId: 1,
             type: 'SERVICE',
@@ -49,7 +51,7 @@ const initialState = {
         {
             id: 5,
             nameS: 'Подъем без лифта',
-            nameL: 'Подъем без лифта',
+            nameF: 'Подъем без лифта',
             cost: 25000,
             unitId: 3,
             type: 'SERVICE',
@@ -58,7 +60,7 @@ const initialState = {
         {
             id: 6,
             nameS: 'Пронос товара более 20 метров',
-            nameL: 'Пронос товара более 20 метров',
+            nameF: 'Пронос товара более 20 метров',
             cost: 15000,
             unitId: 4,
             type: 'SERVICE',
@@ -67,13 +69,14 @@ const initialState = {
         {
             id: 7,
             nameS: 'Выезд сборщика за МКАД до 10 км',
-            nameL: 'Выезд сборщика за МКАД до 10 км',
+            nameF: 'Выезд сборщика за МКАД до 10 км',
             cost: 35000,
             unitId: 5,
             type: 'SERVICE',
             section: 'ASSEMBLY'
         },
-    ],
+    ].map(ModelProductBase)
+    ,
 };
 
 initialState.li.forEach(product => {

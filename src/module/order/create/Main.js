@@ -30,7 +30,7 @@ const Main = (props) => {
         return <CircularProgress size={80} thickness={5} />
     }
 
-    if (!edit.isNew && edit.hasModify) {
+    if (!edit.isNew && edit.isModify) {
         return (<div>
             todo:
             есть изменения в существующей записи
@@ -49,7 +49,7 @@ export default connect(
         /**
          * Создает объект заказа
          */
-        createModelOrderEdit: () => dispatch(orderCreate)
+        createModelOrderEdit: () => dispatch(orderCreate())
     })
 )(Main);
 

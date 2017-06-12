@@ -1,19 +1,19 @@
-import Exception from '../../core/Exception';
+import Exception from '../../../core/Exception';
 
 /**
  * Единица заказа, то, что заказал клиент
  * @constructor
  * @param {*} data
- * @return ModelOrderItem
+ * @return ModelOrderBase
  */
-export default function ModelOrderItem(data) {
+export default function ModelOrderBase(data) {
 
     try {
         /**
-         * @namespace ModelOrderItem
-         * @typedef ModelOrderItem
+         * @namespace ModelOrderBase
+         * @typedef ModelOrderBase
          */
-        return {
+        const model = {
             /**
              * @type Number
              */
@@ -43,7 +43,10 @@ export default function ModelOrderItem(data) {
              * @type Number скидка
              */
             discount: data.discount || 0,
-        }
+        };
+        
+
+        return model;
     }
     catch(event) {
         Exception({

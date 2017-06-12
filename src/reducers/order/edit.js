@@ -1,4 +1,5 @@
 //import {compressSpacesInside, makeFirstLetterUppercase, trimLeft, leaveCyrillic} from '../../helper/text';
+import orderEditValid from '../../model/order/editValid';
 
 const initialState = {
     has: false
@@ -13,9 +14,14 @@ const initialState = {
  * @returns {*}
  */
 export default function (state = initialState, action) {
+    const type = action.type;
     let newState;
+    
+    if (!Array.prototype.every.call('ORDER.EDIT', (char, index) => char === type[index])) {
+        return state;
+    }
 
-    switch (action.type) {
+    switch (type) {
 
         /**
          * создана новая запись
@@ -52,7 +58,7 @@ export default function (state = initialState, action) {
                 ...state,
                 client: {
                     ...state.client,
-                    telLi: [...state.client.telLi, action.value]
+                    telLi: [...state.client.telLi, action.tel]
                 }
             };
             break;
@@ -188,18 +194,49 @@ export default function (state = initialState, action) {
             };
             break;
 
+        /**
+         * Начало сохранения записи
+         */
+        case 'ORDER.EDIT.SAVE.RUN':
+            newState = {
+                ...state,
+                isSaved: true
+            };
+            break;
+
+        /**
+         * Завершение сохранения записи
+         */
+        case 'ORDER.EDIT.SAVE.END':
+            newState = {
+                ...state,
+                isSaved: false
+            };
+            break;
+
+
+
+
+
+        /**
+         * Отчистка данных
+         */
+        case 'ORDER.EDIT.CLEAR':
+            newState = initialState;
+            break;
+
         default: newState = state;
     }
 
-
-    // валидадация данных, поле isValid
+    /*
+     * валидадация данных, поле isValid
+     */
     if (newState !== state) {
-        console.log('newState');
-
-
-
+        const isValid = orderEditValid(newState);
+        if (newState.isValid ^ isValid) {
+            newState.isValid = isValid;
+        }
     }
-    
 
     return newState;
 }

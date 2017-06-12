@@ -1,9 +1,10 @@
 import Exception from '../../core/Exception';
+import verify from './baseVerify';
 
 /**
  * Адрес
  * @constructor
- * @param {*} [data]
+ * @param {Object} data
  * @return ModelAddrBase
  */
 export default function ModelAddrBase(data) {
@@ -13,23 +14,23 @@ export default function ModelAddrBase(data) {
          * @namespace ModelAddrBase
          * @typedef ModelAddrBase
          */
-        const obj = {
+        const model = {
 
             /**
              * @type Number
              */
-            id: 0,
+            id: data.id,
 
             /**
              * @type String текстовое написание адреса: город, улица и т.д.
              */
-            value: '',
+            value: data.value || '',
 
             /**
              * @type String комментарий к адресу
              * например: как заехать, какой ориентир
              */
-            note: '',
+            note: data.note || '',
 
             /**
              * Геокоординаты
@@ -39,21 +40,23 @@ export default function ModelAddrBase(data) {
                 /**
                  * @type Number Широта
                  */
-                lat: 0,
+                lat: (data.geo && data.geo.lat) || 0,
 
                 /**
                  * @type Number Долгота
                  */
-                long: 0
+                long: (data.geo && data.geo.long) || 0
             }
         };
 
-        return obj;
+        verify(model);
+        
+        return model;
     }
     catch (event) {
-        Exception({
-            event,
-            desc: 'Объект не создан'
+        Exception(event, {
+            desc: 'Объект ModelAddrBase не создан',
+            data
         });
     }
 }

@@ -1,4 +1,5 @@
 import Exception from '../../core/Exception';
+import verify from './baseVerify';
 
 /**
  * клиент
@@ -14,7 +15,7 @@ export default function ModelClientBase(data) {
          * @namespace ModelClientBase
          * @typedef ModelClientBase
          */
-        const obj = {
+        const model = {
             /**
              * @type Number
              */
@@ -27,18 +28,19 @@ export default function ModelClientBase(data) {
 
             /**
              * @type ModelTelBase.id[] id номеров телефонов
+             * todo создать из "сырых данных" объекты номеров телефонов
              */
             telLi: data.telLi || [],
         };
 
+        verify(model);
 
-
-        return obj;
+        return model;
     }
     catch(event) {
-        Exception({
-            event,
-            desc: 'Объект не создан'
+        Exception(event, {
+            desc: 'Объект ModelClientBase не создан',
+            data
         });
     }
 }

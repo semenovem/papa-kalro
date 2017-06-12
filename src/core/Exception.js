@@ -1,19 +1,115 @@
 /**
  * Работа с исключениями
  *
+ * @use
+ *
+ * Создать исключение
+ *
+ *
+ * Exception(event, {
+ *      desc: ''            // описание
+ * })
+ *
+ *
+ *
+ *
+ *
  */
-const Exception = (params) => {
-    console.warn('Exception', params);
-    throw params.event instanceof ExceptionEvent ? params : new ExceptionEvent(params);
+export default function Exception (...args) {
+    if (this instanceof Exception) {
+
+        /**
+         * @type {Array} массив событий catch, через которые прошло исключение
+         */
+        this._li = [];
+        return this;
+    }
+    
+    if (args[0] instanceof Exception) {
+        args[0]._li.push(prepareParams(args[1]));
+
+        throw args[0];
+    }
+
+    const event = new Exception();
+
+    switch (args.length) {
+        case 1:
+            event._li.push(prepareParams(args[0]));
+            break;
+        case 2:
+            event._li.push({
+                event: args[0],
+                ...args[1]
+            });
+            break;
+
+        default:
+    }
+
+    throw event;
+}
+
+/**
+ * Статический метод
+ * Прверяет, является ли переданный объект экземпляром класса Exception
+ * @param {*} obj
+ * @returns Boolean
+ */
+Exception.is = function(obj) {
+    return obj instanceof Exception;
 };
 
 /**
- * Объект события
- * @param {Object} params
- * @constructor
+ * Прототипные методы
+ * @namespace Exception
  */
-function ExceptionEvent(params) {
-    Object.keys(params).forEach(key => this[key] = params[key], this);
-}
+Exception.prototype = {};
 
-export default Exception;
+/**
+ * Подготовка переданного значения в исключение
+ * @param params
+ * @param event
+ * @returns {*}
+ */
+function prepareParams(params, event) {
+    // <debug>
+    if (!params || (typeof params === 'object' && Array.isArray(params))) {
+        console.warn('params должен быть объектом');
+        return params;
+    }
+    // </debug>
+
+    let obj;
+
+    switch (typeof params) {
+        case 'string':
+            obj = {
+                desc: params
+            };
+            break;
+
+        case 'object':
+            // <debug>
+            if ('desc' in params === false) {
+                console.warn('в объекте params должно быть поле desc, с описанием исключения');
+            }
+            // </debug>
+            obj = {
+                ...params
+            };
+            break;
+
+        default:
+            // <debug>
+            console.warn('params должен быть объектом');
+            // </debug>
+            return params;
+    }
+
+    
+    if (event) {
+        obj.event = event;
+    }
+    return obj;
+}

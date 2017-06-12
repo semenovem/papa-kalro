@@ -5,27 +5,18 @@ import OrderEditClient from '../../../cmp/order/edit/client/Client';
 import OrderEditAddr from '../../../cmp/order/edit/Addr';
 import OrderEditDelivery from '../../../cmp/order/edit/delivery/Main';
 import OrderEditAssembly from '../../../cmp/order/edit/assembly/Main';
-import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
 import AddrGeo from '../../addr/OrderEditGeo';
 import Paper from 'material-ui/Paper';
+import BtnSave from './BtnSave';
 
 /**
  * Редактирование заказа
  */
 class Edit extends Component {
-
+    
     /**
-     * валидация данных
-     * @param {ModelOrderEdit} props.edit
-     */
-    componentWillReceiveProps(props) {
-
-        // валидатор данных
-    }
-
-    /**
-     * Обработчик чекбока включения/выключения доставки
+     * Обработчик чекбокса включения/выключения доставки
      * @param e
      * @param {Boolean} check
      */
@@ -34,7 +25,7 @@ class Edit extends Component {
     };
 
     /**
-     * Обработчик чекбока включения/выключения услуги сборка
+     * Обработчик чекбокса включения/выключения услуги сборка
      * @param e
      * @param {Boolean} check
      */
@@ -43,9 +34,7 @@ class Edit extends Component {
     };
 
     render() {
-
-        console.log('edit', this.props.edit);
-
+        const props = this.props;
         const deliveryEl = [
             <Checkbox
                 key="0"
@@ -53,9 +42,9 @@ class Edit extends Component {
                 label="Доставка"
                 style={{}}
                 onCheck={this.onChangeDeliveryHas}
-                checked={this.props.deliveryHas}
+                checked={props.deliveryHas}
             />,
-            this.props.deliveryHas && <OrderEditDelivery key="1"/>
+            this.props.deliveryHas && <OrderEditDelivery key='1'/>
         ];
 
         const assemblyEl = [
@@ -65,13 +54,13 @@ class Edit extends Component {
                 label="Сборка"
                 style={{}}
                 onCheck={this.onChangeAssemblyHas}
-                checked={this.props.assemblyHas}
+                checked={props.assemblyHas}
             />,
             this.props.assemblyHas && <OrderEditAssembly className="indent-top-l" key="1"/>
         ];
 
         return (
-            <div className={this.props.className}>
+            <div className={props.className}>
                 <OrderEditDoc/>
                 <OrderEditClient className="indent-top-l"/>
                 
@@ -80,21 +69,13 @@ class Edit extends Component {
                     <AddrGeo/>
                 </Paper>
 
-                {this.props.deliveryHas ?
+                {props.deliveryHas ?
                     <Paper className="indent-top-l indent-in-m" children={deliveryEl}/> : deliveryEl}
 
-                {this.props.assemblyHas ?
+                {props.assemblyHas ?
                     <Paper className="indent-top-l indent-in-m" children={assemblyEl}/> : assemblyEl}
 
-                <div className="indent-top-l">
-                    <RaisedButton
-                        label="Сохранить"
-                        primary={true}
-                        style={{}}
-                        disabled={false}
-                        onTouchTap={() => { console.log('tap') }}
-                    />
-                </div>
+                <BtnSave className="indent-top-l"/>
             </div>
         );
     }
@@ -104,14 +85,14 @@ export default connect(
     state => ({
         deliveryHas: state.order.edit.delivery.has,
         assemblyHas: state.order.edit.assembly.has,
-        edit: state.order.edit
+        model: state.order.edit
     }),
     dispatch => ({
         /**
          * Изменение состояния вкл/выкл доставка
          * @param {Boolean} has
          */
-        changeDeliveryHas: (has) => dispatch({
+        changeDeliveryHas: has => dispatch({
             type: 'ORDER.EDIT.DELIVERY.HAS.CHANGE',
             has
         }),
@@ -120,7 +101,7 @@ export default connect(
          * Изменение состояния вкл/выкл доставка
          * @param {Boolean} has
          */
-        changeAssemblyHas: (has) => dispatch({
+        changeAssemblyHas: has => dispatch({
             type: 'ORDER.EDIT.ASSEMBLY.HAS.CHANGE',
             has
         })

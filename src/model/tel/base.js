@@ -1,5 +1,5 @@
 import Exception from '../../core/Exception';
-//import {isPositiveAndNotZero as isIntPositiveAndNotZero, isNotZero as isIntNotZero} from '../../validation/int'
+import verify from './baseVerify';
 
 /**
  * Номер телефона
@@ -14,7 +14,7 @@ export default function ModelTelBase(data) {
          * @namespace ModelTelBase
          * @typedef ModelTelBase
          */
-        const obj = {
+        const model = {
 
             /**
              * @type Number
@@ -24,15 +24,17 @@ export default function ModelTelBase(data) {
             /**
              * @type String номер телефона
              */
-            value: '',
+            value: data.value || '',
 
             /**
              * @type String комментарий
              */
-            note: ''
+            note: data.note || ''
         };
 
-        return obj;
+        verify(model);
+
+        return model;
     }
     catch(event) {
         Exception({
@@ -41,5 +43,3 @@ export default function ModelTelBase(data) {
         });
     }
 }
-
-// валидатор телефонного номера

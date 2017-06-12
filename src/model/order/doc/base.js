@@ -1,10 +1,10 @@
 import Exception from '../../../core/Exception';
-
+import verify from './baseVerify';
 
 /**
  * Документы Заказа
  * @constructor
- * @param {Object} data
+ * @param {?Object} data
  * @return ModelOrderDocBase
  */
 export default function ModelOrderDocBase(data) {
@@ -14,29 +14,20 @@ export default function ModelOrderDocBase(data) {
          * @namespace ModelOrderDocBase
          * @typedef ModelOrderDocBase
          */
-        const obj = {
+        const model = {
 
             /**
              * номер документа (продажа в магазине)
+             * @type String
              */
-            num: ''
+            num: (data && data.num) || ''
         };
 
-        return obj;
+        verify(model);
+        
+        return model;
     }
     catch(event) {
-        Exception({
-            event,
-            desc: 'Объект не создан'
-        });
+        Exception(event, 'Объект ModelOrderDocBase не создан');
     }
-}
-
-/**
- * Валидация
- * @param {ModelOrderDocBase} obj
- * @returns {Boolean}
- */
-export function valid(obj) {
-    return obj.num.length > 1;
 }

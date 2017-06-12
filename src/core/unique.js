@@ -4,7 +4,7 @@ let qt = -1;
  * Возвращает уникальное значение для временных (не сохраненных) id
  * @returns Number
  */
-export default function getUniqueId() {
+export function getUniqueTmpId() {
     // todo добавить проверку на переполнение
     return qt--;
 }

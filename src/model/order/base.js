@@ -1,7 +1,8 @@
 import Exception from '../../core/Exception';
+import verify from './baseVerify';
 import ModelClientBase from '../client/base';
 import ModelAddrBase from '../addr/base';
-import ModelOrderDocBase, {valid as validDoc} from './doc/base';
+import ModelOrderDocBase, {valid as orderDocValid} from './doc/base';
 
 /**
  * Заказ
@@ -16,32 +17,33 @@ export default function ModelOrderBase(data) {
          * @namespace ModelOrderBase
          * @typedef ModelOrderBase
          */
-        const obj = {
+        const model = {
 
             /**
-             * @type Number отрицательные значения для новых записей
+             * @type Number
+             * !== 0
              */
-            id: 0,
+            id: data.id,
 
             /**
              * Исходные документы
              */
-            doc: ModelOrderDocBase(data),
+            doc: ModelOrderDocBase(data.doc),
 
             /**
              * @type ModelClientBase
              */
-            client: ModelClientBase.apply(null, data && [data.client]),
+            client: ModelClientBase(data.client),
 
             /**
              * @type ModelAddrBase
              */
-            addr: ModelAddrBase.apply(null, data && data.addr),
+            addr: ModelAddrBase(data.addr),
 
             /**
-             * @type ModelOrderItem.id[] содержимое заказа клиента
+             * @type ModelOrderBase.id[] содержимое заказа клиента
              */
-            itemLi: [],
+            itemLi: data.itemLi || [],
 
             /**
              * Данные для доставки
@@ -49,9 +51,10 @@ export default function ModelOrderBase(data) {
             delivery: {
                 /**
                  * Комментарий для доставки
-                 * например: за сколько позвонить
+                 * например: за какое время позвонить
+                 * @type String
                  */
-                note: ''
+                note: (data.delivery && data.delivery.note) || ''
             },
 
             /**
@@ -60,29 +63,21 @@ export default function ModelOrderBase(data) {
             assembly: {
                 /**
                  * Комментарий для сборки
-                 * например: за сколько позвонить
+                 * например: за какое время позвонить
+                 * @type String
                  */
-                note: ''
+                note: (data.assembly && data.assembly.note) || ''
             }
         };
 
-        return obj;
+        verify(model);
+
+        return model;
     }
     catch(event) {
-        Exception({
-            event,
-            desc: 'Объект не создан'
+        Exception(event, {
+            desc: 'Объект ModelOrderBase не создан',
+            data
         });
     }
-}
-
-/**
- * Валидация
- * @param {ModelOrderBase} obj
- * @returns {Boolean}
- */
-export function valid(obj) {
-    return validDoc(obj.doc).length > 1;
-
-    
 }

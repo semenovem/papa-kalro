@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import ProductChoiceView from '../../../product/Choice';
 import {filterItemLiBySection} from '../../../../data/product/base'
-import getUniqueId from '../../../../core/unique';
-import ModelOrderItem from '../../../../model/order/item';
+import {getUniqueTmpId} from '../../../../core/unique';
+import ModelOrderBase from '../../../../model/order/item/base';
 
 /**
  *  Выбор товара/услуги из раздела доставка
@@ -57,8 +57,8 @@ export default connect(
         itemAdd: productIdLi => {
             dispatch({
                 type: 'ORDER.EDIT.ITEM.ADD',
-                itemLiToAdd: productIdLi.map(productId => ModelOrderItem({
-                    id: getUniqueId(),
+                itemLiToAdd: productIdLi.map(productId => ModelOrderBase({
+                    id: getUniqueTmpId(),
                     productId,
                     qty: 1
                 }))
@@ -66,7 +66,7 @@ export default connect(
         },
         /**
          * Удаляет товар/услугу
-         * @param {ModelOrderItem.id[]} itemLiRemove
+         * @param {ModelOrderBase.id[]} itemLiRemove
          */
         itemRemove: (itemLiRemove) => {
             dispatch({

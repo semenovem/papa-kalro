@@ -1,5 +1,7 @@
 import Exception from '../../core/Exception';
 import ModelOrderBase from './base';
+import valid from './baseValid';
+import verify from './editVerify';
 
 /**
  * Новый заказ
@@ -15,8 +17,12 @@ export default function ModelOrderEdit(data) {
         /**
          * @namespace ModelOrderEdit
          * @typedef ModelOrderEdit
+         * @override ModelOrderBase
          */
-        return {
+        const model = {
+            /**
+             * @type ModelOrderBase
+             */
             ...base,
 
             delivery: {
@@ -30,30 +36,44 @@ export default function ModelOrderEdit(data) {
             },
 
             /**
-             * Имеет ли изменение
+             * @type Boolean Имеет ли изменение, нуждающееся в сохранении
+             * для новой записи - true, для существующей - false
              */
-            hasModify: false,
+            isModify: null,
 
             /**
              * @type Boolean запись true = новая, false = существующая
+             * при сохранении в процессе редактирования - запись остается в статусе "новая"
              */
-            isNew: false,
+            isNew: data.isNew,
 
             /**
              * @type Boolean валидность данных
              */
-            isValid: false,
+            isValid: null,
 
             /**
              * Флаг для проверки, в reducer - в state объект с данными или пустая заглушка начального состояния
              */
             has: true,
-        }
+
+            /**
+             * @type Boolean флаг - запись сохраняется
+             */
+            isSaved: false
+        };
+
+        verify(model);
+
+        model.isValid = valid(model);
+        model.isModify = model.isNew;
+
+        return model;
     }
     catch(event) {
-        Exception({
-            event,
-            desc: 'Объект не создан'
+        Exception(event, {
+            desc: 'Объект ModelOrderEdit не создан',
+            data
         });
     }
 }

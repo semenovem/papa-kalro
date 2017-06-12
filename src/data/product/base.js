@@ -1,9 +1,8 @@
 import {getState} from "../../store/index";
 
-
 /**
  * Выбор списка продуктов указанной секции
- * @param {ModelOrderItem[]} itemLi
+ * @param {ModelOrderBase[]} itemLi
  * @param {String} section
  */
 export function filterItemLiBySection(itemLi, section) {

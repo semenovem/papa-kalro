@@ -14,7 +14,7 @@ import ListValueSingle from '../../../choice/ListValueSingle';
 
 /**
  * Показывает список выбранных товаров/услуг
- * @param {ModelOrderItem[]} props.itemLi
+ * @param {ModelOrderBase[]} props.itemLi
  * @param {Function} props.changeQty обработчик изменения кол-ва
  */
 class Main extends Component {
@@ -87,7 +87,7 @@ class Main extends Component {
 
     /**
      * Одна строка в таблице
-     * @param {ModelOrderItem} item
+     * @param {ModelOrderBase} item
      */
     createRow = (item, index) => {
         const product = this.props.productHash[item.productId];
