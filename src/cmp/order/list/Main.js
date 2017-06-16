@@ -21,11 +21,9 @@ class List extends Component {
 
 export default connect(
     state => {
-        const menu = state.menu;
+        const list = state.order.list;
         return {
-            menu: {
-                path: menu.items.filter(item => item.id === menu.selectedId)[0].path
-            }
+            list
         }
     },
     dispatch => ({})

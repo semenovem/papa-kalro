@@ -60,7 +60,8 @@ export default connect(
                 itemLiToAdd: productIdLi.map(productId => ModelOrderBase({
                     id: getUniqueTmpId(),
                     productId,
-                    qty: 1
+                    qty: 1,
+                    //cost:
                 }))
             })
         },

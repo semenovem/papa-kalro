@@ -17,14 +17,19 @@ export function clientTelCreate(dispatch, getState) {
     }, 1);
 }
 
+export function createItem() {
+    
+}
+
+
+
 /**
  * Сохраняет запись
  * @param {ModelOrderEdit} model
  */
 export function save(model) {
     return (dispatch, getState) => {
-
-        const isNew = model.isNew;
+         const isNew = model.isNew;
 
         if (model.isSaved) {
             // todo если запись уже сохраняется - поставить в очередь
@@ -37,11 +42,21 @@ export function save(model) {
             type: 'ORDER.EDIT.SAVE.RUN'
         });
 
-
         orderEditSave(model)
             .then(modelSave => {
 
                 // todo заменить временные id на возвращенные сервером
+                // для идентификации записи можем использововать временный id:
+                // если id существует в state - все ок
+                // если id не существует - игнорировать
+
+                // искать запись в state.order.edit
+                // искать запись в state.order.list
+
+                // за время сохранения, в записи могут произойти изменения:
+                // могут измениться данные
+                // запись может быть удалена и стать не актуальной
+                // запись может быть сохранена в другой операции
 
                 dispatch({
                     type: 'ORDER.LIST.ADD',
@@ -50,11 +65,22 @@ export function save(model) {
                 dispatch({
                     type: 'ORDER.EDIT.SAVE.END'
                 });
-
-            });
-
+                dispatch({
+                    type: 'MENU.SELECT.ITEM.AT.PATH',
+                    path: 'order.list'
+                });
+            });                      
         console.log ('save', getState());
     }
+}
+
+/**
+ * Получает из ModelOrderEdit -> MdelOrderBase
+ * @param {ModelOrderEdit} modelEdit
+ * @returns ModelOrderBase
+ */
+function transformToModelBase(modelEdit) {
+    return modelOrderBase(modelEdit);
 }
 
 

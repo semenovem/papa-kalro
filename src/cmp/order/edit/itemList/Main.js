@@ -52,6 +52,12 @@ class Main extends Component {
         width: '50px',
         textAlign: 'right'
     };
+    styleColTotal = {
+        paddingLeft: '5px',
+        paddingRight: '5px',
+        width: '80px',
+        textAlign: 'right'
+    };
 
     /**
      * Обработчик клика по таблице
@@ -88,12 +94,12 @@ class Main extends Component {
     /**
      * Одна строка в таблице
      * @param {ModelOrderBase} item
+     * todo заменить index на css счетчик номеров строк
      */
     createRow = (item, index) => {
         const product = this.props.productHash[item.productId];
         const unit = this.props.unitHash[product.unitId];
 
-        // todo добавить css счетчик
         return (
             <TableRow key={item.id}>
 
@@ -112,8 +118,44 @@ class Main extends Component {
                 <TableRowColumn style={this.styleColCost}>
                     {moneyFormat('', product.cost)}
                 </TableRowColumn>
+
+                <TableRowColumn style={this.styleColTotal}>
+                    {moneyFormat('', product.cost * item.qty)}
+                </TableRowColumn>
             </TableRow>
         )
+    };
+
+    /**
+     * Итоговая строка
+     *
+     */
+    createRowTotal = (itemLi) => {
+
+        const {qty, total} = itemLi.reduce((result, item) => {
+            result.qty += item.qty;
+            result.total += item.cost * item.qty;
+
+            return result;
+        }, { qty: 0, total: 0});
+
+             return (
+                 <TableRow key={'total'}>
+
+                     <TableRowColumn style={this.styleColNum}> </TableRowColumn>
+                     <TableRowColumn style={this.styleColName}>Итого</TableRowColumn>
+                     <TableRowColumn style={this.styleColUnit}> </TableRowColumn>
+                     <TableRowColumn style={this.styleColQty}>
+                         {qty}
+                     </TableRowColumn>
+
+                     <TableRowColumn style={this.styleColCost}> </TableRowColumn>
+
+                     <TableRowColumn style={this.styleColTotal}>
+                         {moneyFormat('', total)}
+                     </TableRowColumn>
+                 </TableRow>
+             )
     };
 
     render() {
@@ -122,20 +164,19 @@ class Main extends Component {
                 <Table onCellClick={this.onCellClick}>
                     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                         <TableRow>
-                            <TableHeaderColumn
-                                style={this.styleColNum}
-                            >№</TableHeaderColumn>
-
+                            <TableHeaderColumn style={this.styleColNum}>№</TableHeaderColumn>
                             <TableHeaderColumn style={this.styleColName}>Наименование</TableHeaderColumn>
                             <TableHeaderColumn style={this.styleColUnit}>Ед.изм.</TableHeaderColumn>
                             <TableHeaderColumn style={this.styleColQty}>Кол-во</TableHeaderColumn>
                             <TableHeaderColumn style={this.styleColCost}>Цена</TableHeaderColumn>
+                            <TableHeaderColumn style={this.styleColTotal}>Всего</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
 
                     {this.props.itemLi.length &&
                     <TableBody displayRowCheckbox={false}>
                         {this.props.itemLi.map(this.createRow)}
+                        {this.props.itemLi.length && this.createRowTotal(this.props.itemLi)}
                     </TableBody>
                     }
                 </Table>
