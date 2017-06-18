@@ -9,8 +9,8 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import {format as moneyFormat} from '../../../../helper/money';
-import Popover from 'material-ui/Popover';
-import ListValueSingle from '../../../choice/ListValueSingle';
+import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
+import ListInteger from '../../../select/ListInteger';
 
 /**
  * Показывает список выбранных товаров/услуг
@@ -22,7 +22,8 @@ class Main extends Component {
         super(props);
         this.state = {
             qtyOpen: false,
-            qtyAnchorEl: null
+            qtyAnchorEl: null,
+            qtyValue: null
         }
     }
     styleColNum = {
@@ -68,16 +69,19 @@ class Main extends Component {
     onCellClick = (rowKey, colKey, event) => {
         this.itemSelected = this.props.itemLi[rowKey];
 
-        if (colKey !== 4) return;
+        if (colKey !== 3 || !this.itemSelected) return;
 
         this.setState({
             qtyOpen: true,
-            qtyAnchorEl: event.currentTarget
+            qtyAnchorEl: event.currentTarget,
+            qtyValue: this.itemSelected.qty
         })
 
     };
 
-
+    /**
+     * Обработчик закрытия Popover
+     */
     handleRequestClose = () => {
         this.itemSelected = null;
       this.setState({
@@ -85,9 +89,15 @@ class Main extends Component {
       });
     };
 
-
-    editQty = () => {
-        this.props.changeQty()
+    /**
+     * Изменяет кол-во товара/услуги
+     * @param {Number} value выбранное значение
+     */
+    changeQty = (value) => {
+        this.props.changeQty(this.itemSelected.id, value);
+        this.setState({
+            qtyOpen: false
+        });
     };
 
 
@@ -128,10 +138,8 @@ class Main extends Component {
 
     /**
      * Итоговая строка
-     *
      */
     createRowTotal = (itemLi) => {
-
         const {qty, total} = itemLi.reduce((result, item) => {
             result.qty += item.qty;
             result.total += item.cost * item.qty;
@@ -160,7 +168,7 @@ class Main extends Component {
 
     render() {
         return (
-            <div>
+            <div className={this.props.className}>
                 <Table onCellClick={this.onCellClick}>
                     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                         <TableRow>
@@ -193,9 +201,15 @@ class Main extends Component {
                         vertical: 'top'
                     }}
                     onRequestClose={this.handleRequestClose}
+                    animation={PopoverAnimationVertical}
                 >
-                    <ListValueSingle
-                        valueLi={[1, 2, 3]}
+                    <ListInteger
+                        optionLi={[1, 2, 3]}
+                        value={this.state.qtyValue}
+                        field={{
+                            min: 1
+                        }}
+                        change={this.changeQty}
                     />
                 </Popover>
             </div>

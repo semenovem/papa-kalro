@@ -215,11 +215,35 @@ export default function (state = initialState, action) {
             break;
 
 
+        /**
+         * Изменяет кол-во в позиции заказа
+         * @param {Number} action.id изменяемая запись
+         * @param {Number} action.qty кол-во
+         */
+        case 'ORDER.EDIT.ITEM.QTY.CHANGE':
+            newState = {
+                ...state,
+                itemLi: state.itemLi.map(item => {
+                    if (action.id === item.id) {
+                        item = {
+                            ...item,
+                            qty: action.qty
+                        }
+                    }
+                    return item;
+                })
+            };
+            break;
+
+
+
+
 
 
 
         /**
          * Отчистка данных
+         * todo пока не используется
          */
         case 'ORDER.EDIT.CLEAR':
             newState = initialState;

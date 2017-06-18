@@ -8,11 +8,21 @@ import {filterItemLiBySection} from '../../../../data/product/base';
  */
 class ItemList extends Component {
 
+    /**
+     * Изменяет кол-во товара/услуги
+     * @param {Number} id
+     * @param {Number} qty значение кол-ва позиции заказа
+     */
+    changeQty = (id, qty) => {
+        this.props.changeQty(id, qty);
+    };
+
     render() {
         return (
             <ItemListView
                 className={this.props.className}
                 itemLi={this.props.itemLi}
+                changeQty={this.changeQty}
             />
 
         )
@@ -26,12 +36,15 @@ export default connect(
 
     dispatch => ({
         /**
-         * @param
+         * @param {Number} id
+         * @param {Number} qty
          */
-        changeDocNum: (val) => dispatch({
-            type: '',
-            value: val
+        changeQty: (id, qty) => dispatch({
+            type: 'ORDER.EDIT.ITEM.QTY.CHANGE',
+            id,
+            qty,
         }),
+
     })
 )(ItemList);
 

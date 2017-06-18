@@ -12,12 +12,14 @@ import verify from './editVerify';
 export default function ModelOrderEdit(data) {
 
     try {
+        /**
+         * @type {ModelOrderBase}
+         */
         const base = ModelOrderBase(data);
 
         /**
          * @namespace ModelOrderEdit
          * @typedef ModelOrderEdit
-         * @override ModelOrderBase
          */
         const model = {
             /**

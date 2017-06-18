@@ -8,6 +8,5 @@
  */
 export function format(sign, sum, dec, round) {
     // todo добавить форматирование числа
-    return String(sum / 100);
-    //return String(sum / 100).replace(/(\d){3}$/g, '.');
+    return (sum / 100).toLocaleString();
 }

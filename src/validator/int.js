@@ -4,7 +4,7 @@
  * @returns {boolean}
  */
 function is(val) {
-    return isFinite(val) && Math.floor(val) === val;
+    return typeof val === 'number' && isFinite(val) && Math.floor(val) === val;
 }
 
 /**
@@ -24,9 +24,6 @@ function isPositiveAndNotZero(val) {
 function isNotZero(val) {
     return is(val) && val !== 0;
 }
-
-
-
 
 export {
     is,

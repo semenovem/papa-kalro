@@ -3,10 +3,14 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import './list-value-single.css';
+import FieldNumber from '../field/Number';
 
 /**
  * Список значений для выбора
  * @param {[]|{}[]} props.valueLi - либо набор значений, либо объекты { text, id }
+ * @param {[{ type: String, min, max, }]} props.valueCustom массив описаний полей
+ *
+ * для чисел(type: number): минимальное, максимальное значение, шаг
  *
  * @param {Function} choice(val[])
  */
