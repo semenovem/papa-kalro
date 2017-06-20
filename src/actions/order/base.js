@@ -2,13 +2,14 @@ import ModelOrderEdit from '../../model/order/edit';
 import ModelTelBase from '../../model/tel/base';
 import ModelClientBase from '../../model/client/base';
 import ModelAddrBase from '../../model/addr/base';
-import {getUniqueTmpId} from '../../core/unique';
+import ModelOrderItemFactory from '../../model/order/item/factory';
+import {getTmpId as getUniqueTmpId} from '../../core/unique';
 
 /**
  * Создает новую запись заказа
  */
 export function create() {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         setTimeout(() => {
              dispatch({
                  type: 'ORDER.EDIT.CREATED',
@@ -19,12 +20,24 @@ export function create() {
                      },
 
                      itemLi: [
+                         ModelOrderItemFactory({
+                             id: getUniqueTmpId(),
+                             productId: 3,
+                             qty: 3,
+                             cost: getState().product.hash[3].cost,
+                         }),
+                         ModelOrderItemFactory({
+                             id: getUniqueTmpId(),
+                             productId: 3,
+                             qty: 3,
+                             costPercent: getState().product.hash[3].cost,
+                         }),
                          {
                              id: getUniqueTmpId(),
                              productId: 2,
                              qty: 1,
                              note: '',
-                             cost: 0,
+                             cost: getState().product.hash[2].cost,
                              discount: 0,
                          }
                      ],

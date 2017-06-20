@@ -52,7 +52,7 @@ export default function Exception (...args) {
 
 /**
  * Статический метод
- * Прверяет, является ли переданный объект экземпляром класса Exception
+ * Проверяет, является ли переданный объект экземпляром класса Exception
  * @param {*} obj
  * @returns Boolean
  */

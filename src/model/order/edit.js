@@ -10,7 +10,6 @@ import verify from './editVerify';
  * @return ModelOrderEdit
  */
 export default function ModelOrderEdit(data) {
-
     try {
         /**
          * @type {ModelOrderBase}
@@ -22,9 +21,6 @@ export default function ModelOrderEdit(data) {
          * @typedef ModelOrderEdit
          */
         const model = {
-            /**
-             * @type ModelOrderBase
-             */
             ...base,
 
             delivery: {

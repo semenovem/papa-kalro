@@ -176,16 +176,18 @@ export default function (state = initialState, action) {
 
         /**
          * Добавляет товар/услугу к заказу
+         * @param {ModelOrderBase[]} action.itemLi
          */
         case 'ORDER.EDIT.ITEM.ADD':
             newState = {
                 ...state,
-                itemLi:  [...state.itemLi, ...action.itemLiToAdd]
+                itemLi:  [...state.itemLi, ...action.itemLi]
             };
             break;
 
         /**
          * Удаляет товар/услугу в заказе
+         * @param {ModelOrderBase[]} action.itemLi
          */
         case 'ORDER.EDIT.ITEM.REMOVE':
             newState = {
@@ -228,6 +230,29 @@ export default function (state = initialState, action) {
                         item = {
                             ...item,
                             qty: action.qty
+                        }
+                    }
+                    return item;
+                })
+            };
+            break;
+
+        /**
+         * Изменяет стоимость товара/услуги в заказе
+         * @param {Number} action.id изменяемая запись
+         * @param {Number} action.cost стоимость
+         */
+        case 'ORDER.EDIT.ITEM.COST.CHANGE':
+
+            console.log('ORDER.EDIT.ITEM.COST.CHANGE', action);
+
+            newState = {
+                ...state,
+                itemLi: state.itemLi.map(item => {
+                    if (action.id === item.id) {
+                        item = {
+                            ...item,
+                            cost: action.cost
                         }
                     }
                     return item;

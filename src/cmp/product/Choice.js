@@ -71,6 +71,8 @@ class Choice extends Component {
                 onChange={this.onChange}
                 selectionRenderer={() => 'Добавить услуги'}
                 autoWidth={true}
+                maxHeight={200}
+                menuItemStyle={{ fontSize: '12px', maxWidth: '500px' }}
             >
                 {this.menuItems(this.props.productLi)}
             </SelectField>

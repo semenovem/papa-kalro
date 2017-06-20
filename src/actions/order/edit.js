@@ -1,7 +1,8 @@
 import ModelTelBase from '../../model/tel/base';
-import {getUniqueTmpId} from '../../core/unique';
+import {getTmpId as getUniqueTmpId} from '../../core/unique';
 import {save as orderEditSave} from '../../provider/order/edit';
-import modelOrderBase from '../../model/order/base';
+import ModelOrderBase from '../../model/order/base';
+import ModelOrderItemBase from '../../model/order/item/base';
 
 /**
  * Создает новую запись телефона при редактирования заказа
@@ -17,10 +18,26 @@ export function clientTelCreate(dispatch, getState) {
     }, 1);
 }
 
-export function createItem() {
-    
-}
+/**
+ * Добавляет товар/услугу к заказу
+ * @param {ModelProductBase.id[]} idLi
+ * @returns {function(*, *)}
+ */
+export function addItem(idLi) {
+    return (dispatch, getState) => {
+        const productLiHash = getState().product.hash;
 
+        dispatch({
+            type: 'ORDER.EDIT.ITEM.ADD',
+            itemLi: idLi.map(productId => ModelOrderItemBase({
+                id: getUniqueTmpId(),
+                productId,
+                qty: 1,
+                cost: productLiHash[productId].cost
+            }))
+        })
+    }
+}
 
 
 /**
@@ -60,7 +77,7 @@ export function save(model) {
 
                 dispatch({
                     type: 'ORDER.LIST.ADD',
-                    model: modelOrderBase(model)
+                    model: ModelOrderBase(model)
                 });
                 dispatch({
                     type: 'ORDER.EDIT.SAVE.END'
@@ -80,8 +97,10 @@ export function save(model) {
  * @returns ModelOrderBase
  */
 function transformToModelBase(modelEdit) {
-    return modelOrderBase(modelEdit);
+    return ModelOrderBase(modelEdit);
 }
+
+
 
 
 /**

@@ -2,7 +2,7 @@
   "name": "Papa-Karlo",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://cw98935.tmweb.ru/vv01",
+  "homepage": "http://cw98935.tmweb.ru/papa-karlo",
   "dependencies": {
     "material-ui": "^0.18.1",
     "react": "^15.5.4",

@@ -1,16 +1,26 @@
-let qt = -1;
+let tmpId = -1;
+let int = 1;
 
 /**
  * Возвращает уникальное значение для временных (не сохраненных) id
  * @returns Number
  */
-export function getUniqueTmpId() {
+export function getTmpId() {
     // todo добавить проверку на переполнение
-    return qt--;
+    return tmpId--;
 }
 
 /**
  * Возвращает уникальную строку
  * @returns String
  */
-export function getUniqueStr() {}
+export function getStr() {}
+
+
+/**
+ * Возвращает уникальное целое число
+ * @returns Number
+ */
+export function getInt() {
+    return int++;
+}

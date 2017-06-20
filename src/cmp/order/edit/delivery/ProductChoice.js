@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import ProductChoiceView from '../../../product/Choice';
 import {filterItemLiBySection} from '../../../../data/product/base'
-import {getUniqueTmpId} from '../../../../core/unique';
-import ModelOrderBase from '../../../../model/order/item/base';
+import {getTmpId as getUniqueTmpId} from '../../../../core/unique';
+import ModelOrderItemBase from '../../../../model/order/item/base';
+
+import {addItem as addItemToOrder} from '../../../../actions/order/edit';
 
 /**
  *  Выбор товара/услуги из раздела доставка
@@ -23,7 +25,6 @@ class ProductChoice extends Component {
      * @param {ModelProductBase.id[]} productIdLi
      */
     remove = (productIdLi) => {
-
         const itemLiRemove = this.props.itemLi
             .filter(item => ~productIdLi.indexOf(item.productId))
             .map(item => item.id);
@@ -52,27 +53,19 @@ export default connect(
     dispatch => ({
         /**
          * Создает новый товар/услугу в заказе
-         * @param {ModelProductBase.id[]} productIdLi
+         * @param {ModelProductBase.id[]} idLi
          */
-        itemAdd: productIdLi => {
-            dispatch({
-                type: 'ORDER.EDIT.ITEM.ADD',
-                itemLiToAdd: productIdLi.map(productId => ModelOrderBase({
-                    id: getUniqueTmpId(),
-                    productId,
-                    qty: 1,
-                    //cost:
-                }))
-            })
-        },
+        itemAdd: idLi => dispatch(addItemToOrder(idLi)),
+
         /**
          * Удаляет товар/услугу
-         * @param {ModelOrderBase.id[]} itemLiRemove
+         * todo удаление позиции можно только в таблице с заказами=
+         * @param {ModelOrderBase.id[]} idLi
          */
-        itemRemove: (itemLiRemove) => {
+        itemRemove: (idLi) => {
             dispatch({
                 type: 'ORDER.EDIT.ITEM.REMOVE',
-                itemLiToRemove: itemLiRemove
+                itemLiToRemove: idLi
             })
         }
     })

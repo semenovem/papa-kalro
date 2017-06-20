@@ -26,13 +26,19 @@ const initialState = {
             id: 4,
             nameS: '20 м',
             nameF: 'каждые 20 метров',
-            name: '',
+            note: '',
         },
         {
             id: 5,
             nameS: 'адрес',
             nameF: 'один адрес',
-            name: ''
+            note: ''
+        },
+        {
+            id: 6,
+            nameS: 'ед',
+            nameF: 'единица',
+            note: ''
         },
     ].map(modelUnitBase)
 };

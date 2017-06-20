@@ -7,7 +7,6 @@ import {filterItemLiBySection} from '../../../../data/product/base';
  * Список товаров/услуг из раздела "delivery"
  */
 class ItemList extends Component {
-
     /**
      * Изменяет кол-во товара/услуги
      * @param {Number} id
@@ -22,9 +21,7 @@ class ItemList extends Component {
             <ItemListView
                 className={this.props.className}
                 itemLi={this.props.itemLi}
-                changeQty={this.changeQty}
             />
-
         )
     }
 }
@@ -32,19 +29,6 @@ class ItemList extends Component {
 export default connect(
     state => ({
         itemLi: filterItemLiBySection(state.order.edit.itemLi, 'DELIVERY')
-    }),
-
-    dispatch => ({
-        /**
-         * @param {Number} id
-         * @param {Number} qty
-         */
-        changeQty: (id, qty) => dispatch({
-            type: 'ORDER.EDIT.ITEM.QTY.CHANGE',
-            id,
-            qty,
-        }),
-
     })
 )(ItemList);
 

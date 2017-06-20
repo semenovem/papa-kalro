@@ -11,19 +11,47 @@ import {
 import {format as moneyFormat} from '../../../../helper/money';
 import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
 import ListInteger from '../../../select/ListInteger';
+import {
+    transformToRub as moneyTransformToRub,
+    transformToKop as moneyTransformToKop
+} from '../../../../helper/money';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 /**
  * Показывает список выбранных товаров/услуг
  * @param {ModelOrderBase[]} props.itemLi
- * @param {Function} props.changeQty обработчик изменения кол-ва
  */
 class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            qtyOpen: false,
-            qtyAnchorEl: null,
-            qtyValue: null
+            /**
+             * Настройки полей
+             */
+            colSet: {
+                /**
+                 * Видимость
+                 */
+                visibleSet: {
+                    unit: false
+                }
+            },
+
+            /**
+             * Данные для popOver редактирования
+             */
+            editOpen: false,
+            editAnchorEl: null,
+            editValue: null,
+            editOptionLi: null,
+            editHandler: null,
+            editField: null,
+
+            /**
+             * Показать пустые строки, в которых можно выбрать item.
+             */
+            rowEmptyLi: []
         }
     }
     styleColNum = {
@@ -53,6 +81,12 @@ class Main extends Component {
         width: '50px',
         textAlign: 'right'
     };
+    styleColDiscount = {
+        paddingLeft: '5px',
+        paddingRight: '5px',
+        width: '50px',
+        textAlign: 'right'
+    };
     styleColTotal = {
         paddingLeft: '5px',
         paddingRight: '5px',
@@ -67,16 +101,38 @@ class Main extends Component {
      * @param event
      */
     onCellClick = (rowKey, colKey, event) => {
-        this.itemSelected = this.props.itemLi[rowKey];
+        if (!(this.itemSelected = this.props.itemLi[rowKey])) {
+            return;
+        }
 
-        if (colKey !== 3 || !this.itemSelected) return;
+        // qty
+        if (colKey === 3) {
+            this.setState({
+                editOpen: true,
+                editOptionLi: [1, 2, 3],
+                editAnchorEl: event.currentTarget,
+                editValue: this.itemSelected.qty,
+                editHandler: this.changeQty,
+                field: {
+                    min: 1
+                }
+            });
+        }
 
-        this.setState({
-            qtyOpen: true,
-            qtyAnchorEl: event.currentTarget,
-            qtyValue: this.itemSelected.qty
-        })
-
+        // cost
+        if (colKey === 4) {
+            this.setState({
+                editOpen: true,
+                editOptionLi: [],
+                editAnchorEl: event.currentTarget,
+                editValue: moneyTransformToRub(this.itemSelected.cost),
+                editHandler: this.changeCost,
+                field: {
+                    min: 1,
+                    // todo для копеек нужно сделать дробное число
+                }
+            });
+        }
     };
 
     /**
@@ -84,9 +140,9 @@ class Main extends Component {
      */
     handleRequestClose = () => {
         this.itemSelected = null;
-      this.setState({
-          qtyOpen: false,
-      });
+        this.setState({
+            editOpen: false,
+        });
     };
 
     /**
@@ -96,14 +152,33 @@ class Main extends Component {
     changeQty = (value) => {
         this.props.changeQty(this.itemSelected.id, value);
         this.setState({
-            qtyOpen: false
+            editOpen: false
         });
     };
 
+    /**
+     * Изменяет стоимость товара/услуги
+     * @param {Number} value новая стоимость
+     */
+    changeCost = (value) => {
+        this.props.changeCost(this.itemSelected.id, moneyTransformToKop(value));
+        this.setState({
+            editOpen: false
+        });
+    };
+
+    /**
+     * Добавить строку в таблицу
+     */
+    addItem = () => {
+        console.log ('23434');
+
+
+    };
 
     /**
      * Одна строка в таблице
-     * @param {ModelOrderBase} item
+     * @param {ModelOrderItemBase} item
      * todo заменить index на css счетчик номеров строк
      */
     createRow = (item, index) => {
@@ -119,18 +194,22 @@ class Main extends Component {
                 >{index + 1}</TableRowColumn>
 
                 <TableRowColumn style={this.styleColName}>{product.nameS}</TableRowColumn>
-                <TableRowColumn style={this.styleColUnit}>{unit.nameS}</TableRowColumn>
+                {this.state.colSet.visibleSet.unit && <TableRowColumn style={this.styleColUnit}>{unit.nameS}</TableRowColumn>}
 
                 <TableRowColumn style={this.styleColQty}>
                     {item.qty}
                 </TableRowColumn>
 
                 <TableRowColumn style={this.styleColCost}>
-                    {moneyFormat('', product.cost)}
+                    {moneyFormat(item.cost)}
+                </TableRowColumn>
+
+                <TableRowColumn style={this.styleColDiscount}>
+                    {item.discount ? item.discount : ''}
                 </TableRowColumn>
 
                 <TableRowColumn style={this.styleColTotal}>
-                    {moneyFormat('', product.cost * item.qty)}
+                    {moneyFormat(item.cost * item.qty)}
                 </TableRowColumn>
             </TableRow>
         )
@@ -143,28 +222,35 @@ class Main extends Component {
         const {qty, total} = itemLi.reduce((result, item) => {
             result.qty += item.qty;
             result.total += item.cost * item.qty;
-
             return result;
-        }, { qty: 0, total: 0});
+        }, {qty: 0, total: 0});
 
-             return (
-                 <TableRow key={'total'}>
+        return (
+            <TableRow key={'total'}>
 
-                     <TableRowColumn style={this.styleColNum}> </TableRowColumn>
-                     <TableRowColumn style={this.styleColName}>Итого</TableRowColumn>
-                     <TableRowColumn style={this.styleColUnit}> </TableRowColumn>
-                     <TableRowColumn style={this.styleColQty}>
-                         {qty}
-                     </TableRowColumn>
+                <TableRowColumn style={this.styleColNum}> </TableRowColumn>
+                <TableRowColumn style={this.styleColName}>Итого</TableRowColumn>
+                {this.state.colSet.visibleSet.unit && <TableRowColumn style={this.styleColUnit}> </TableRowColumn>}
+                <TableRowColumn style={this.styleColQty}>
+                    {qty}
+                </TableRowColumn>
 
-                     <TableRowColumn style={this.styleColCost}> </TableRowColumn>
+                <TableRowColumn style={this.styleColCost}> </TableRowColumn>
+                <TableRowColumn style={this.styleColDiscount}> </TableRowColumn>
 
-                     <TableRowColumn style={this.styleColTotal}>
-                         {moneyFormat('', total)}
-                     </TableRowColumn>
-                 </TableRow>
-             )
+                <TableRowColumn style={this.styleColTotal}>
+                    {moneyFormat(total)}
+                </TableRowColumn>
+            </TableRow>
+        )
     };
+
+
+    rowEmpty = () => {
+        return
+    };
+
+
 
     render() {
         return (
@@ -174,9 +260,10 @@ class Main extends Component {
                         <TableRow>
                             <TableHeaderColumn style={this.styleColNum}>№</TableHeaderColumn>
                             <TableHeaderColumn style={this.styleColName}>Наименование</TableHeaderColumn>
-                            <TableHeaderColumn style={this.styleColUnit}>Ед.изм.</TableHeaderColumn>
+                            {this.state.colSet.visibleSet.unit && <TableHeaderColumn style={this.styleColUnit}>Ед.изм.</TableHeaderColumn>}
                             <TableHeaderColumn style={this.styleColQty}>Кол-во</TableHeaderColumn>
                             <TableHeaderColumn style={this.styleColCost}>Цена</TableHeaderColumn>
+                            <TableHeaderColumn style={this.styleColDiscount}>Скидка</TableHeaderColumn>
                             <TableHeaderColumn style={this.styleColTotal}>Всего</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
@@ -189,9 +276,14 @@ class Main extends Component {
                     }
                 </Table>
 
+                <FloatingActionButton mini={true} style={{}} onTouchTap={this.addItem}>
+                    <ContentAdd />
+                </FloatingActionButton>
+
+
                 <Popover
-                    open={this.state.qtyOpen}
-                    anchorEl={this.state.qtyAnchorEl}
+                    open={this.state.editOpen}
+                    anchorEl={this.state.editAnchorEl}
                     anchorOrigin={{
                         horizontal: 'left',
                         vertical: 'bottom'
@@ -204,12 +296,10 @@ class Main extends Component {
                     animation={PopoverAnimationVertical}
                 >
                     <ListInteger
-                        optionLi={[1, 2, 3]}
-                        value={this.state.qtyValue}
-                        field={{
-                            min: 1
-                        }}
-                        change={this.changeQty}
+                        optionLi={this.state.editOptionLi}
+                        value={this.state.editValue}
+                        field={this.state.field}
+                        change={this.state.editHandler}
                     />
                 </Popover>
             </div>
@@ -221,6 +311,26 @@ export default connect(
     state => ({
         productHash: state.product.hash,
         unitHash: state.unit.hash
+    }),
+    dispatch => ({
+        /**
+         * @param {Number} id
+         * @param {Number} qty
+         */
+        changeQty: (id, qty) => dispatch({
+            type: 'ORDER.EDIT.ITEM.QTY.CHANGE',
+            id,
+            qty,
+        }),
+        /**
+         * @param {Number} id
+         * @param {Number} cost
+         */
+        changeCost: (id, cost) => dispatch({
+            type: 'ORDER.EDIT.ITEM.COST.CHANGE',
+            id,
+            cost,
+        }),
     })
 )(Main);
 

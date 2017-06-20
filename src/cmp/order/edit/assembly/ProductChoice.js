@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import ProductChoiceView from '../../../product/Choice';
 import {filterItemLiBySection} from '../../../../data/product/base'
-import {getUniqueTmpId} from '../../../../core/unique';
+import {getTmpId as getUniqueTmpId} from '../../../../core/unique';
 import ModelOrderBase from '../../../../model/order/item/base';
 
 /**
@@ -57,7 +57,7 @@ export default connect(
         itemAdd: productIdLi => {
             dispatch({
                 type: 'ORDER.EDIT.ITEM.ADD',
-                itemLiToAdd: productIdLi.map(productId => ModelOrderBase({
+                itemLi: productIdLi.map(productId => ModelOrderBase({
                     id: getUniqueTmpId(),
                     productId,
                     qty: 1
