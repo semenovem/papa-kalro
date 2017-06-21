@@ -14,6 +14,11 @@ export default function ModelOrderItemBase(data) {
          */
         const model = {
             /**
+             * Идентификатор класса экземпляра
+             */
+            _instance: 'ModelOrderItemBase',
+
+            /**
              * @type Number
              * val !== 0
              */
@@ -21,20 +26,22 @@ export default function ModelOrderItemBase(data) {
 
             /**
              * @type ModelProductBase.id
+             * @optional
              * можно создать экземпляр, без указания продукта
              */
             productId: 'productId' in data ? data.productId : 0,
 
             /**
              * @type Number кол-во
-             * val > 0
+             * @optional
+             * val >= 0
              */
-            qty: data.qty,
+            qty: 'qty' in data ? data.qty : 0,
 
             /**
              * @type String примечание
-             * val.length < 10000
              * @optional
+             * val.length < 10000
              */
             note: 'note' in data ? data.note : '',
 
@@ -44,6 +51,13 @@ export default function ModelOrderItemBase(data) {
              * val >= 0 && val <= 100
              */
             discount: 'discount' in data ? data.discount : 0,
+
+            /**
+             * @type String раздел, в котором находится запись
+             * @optional
+             * Если не указано, определяется по "продукту"
+             */
+            section: 'section' in data ? data.section : null,
         };
 
         return model;
@@ -62,6 +76,9 @@ export default function ModelOrderItemBase(data) {
  * @returns Boolean
  */
 ModelOrderItemBase.instanceOf = function (obj) {
+    if ('_instance' in obj) {
+        return obj._instance === 'ModelOrderItemBase';
+    }
     return (
         'id' in obj &&
         'productId' in obj &&

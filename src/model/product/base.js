@@ -17,6 +17,11 @@ export default function ModelProductBase(data) {
          */
         const obj = {
             /**
+             * Идентификатор класса экземпляра
+             */
+            _instance: 'ModelProductBase',
+
+            /**
              * @type Number
              * целое, > 0
              */
@@ -32,12 +37,12 @@ export default function ModelProductBase(data) {
              * @type String название товара / услуги полное
              * val.length > 1
              */
-            nameF: data.nameF,
+            nameF: 'nameF' in data ? data.nameF : '',
 
             /**
              * @type String описание товара/услуги
              */
-            desc: data.desc,
+            desc: 'desc' in data ? data.desc : '',
 
             /**
              * @type ModelUnitBase.id
@@ -73,11 +78,12 @@ export default function ModelProductBase(data) {
  * @returns Boolean
  */
 ModelProductBase.instanceOf = function (obj) {
+    if ('_instance' in obj) {
+        return obj._instance === 'ModelProductBase';
+    }
    return (
        'id' in obj &&
        'nameS' in obj &&
-       'nameF' in obj &&
-       'desc' in obj &&
        'unitId' in obj &&
        'type' in obj &&
        'section' in obj

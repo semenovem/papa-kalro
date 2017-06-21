@@ -24,7 +24,7 @@ export default function ModelOrderItemIndepend(data) {
             /**
              * Идентификатор класса экземпляра
              */
-            _instance: 'ModelProductIndepend',
+            _instance: 'ModelOrderItemIndepend',
 
             /**
              * @type Number стоимость в процентах от стоимости приобретенного товара

@@ -175,18 +175,18 @@ export default function (state = initialState, action) {
             break;
 
         /**
-         * Добавляет товар/услугу к заказу
-         * @param {ModelOrderBase[]} action.itemLi
+         * Добавляет позицию к заказу
+         * @param {ModelOrderItemBase[]|ModelOrderItemDepend[]|ModelOrderItemIndepend[]} action.itemLi
          */
         case 'ORDER.EDIT.ITEM.ADD':
             newState = {
                 ...state,
-                itemLi:  [...state.itemLi, ...action.itemLi]
+               itemLi:  [...state.itemLi, ...action.itemLi]
             };
             break;
 
         /**
-         * Удаляет товар/услугу в заказе
+         * Удаляет продукт в заказе
          * @param {ModelOrderBase[]} action.itemLi
          */
         case 'ORDER.EDIT.ITEM.REMOVE':

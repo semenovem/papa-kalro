@@ -17,6 +17,7 @@ class ItemList extends Component {
             <ItemListView
                 className={this.props.className}
                 itemLi={this.props.itemLi}
+                section="DELIVERY"
             />
 
         )

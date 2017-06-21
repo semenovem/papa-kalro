@@ -22,9 +22,9 @@ export function create() {
                      itemLi: [
                          ModelOrderItemFactory({
                              id: getUniqueTmpId(),
-                             productId: 3,
-                             qty: 3,
-                             cost: getState().product.hash[3].cost,
+                             productId: 2,
+                             qty: 1,
+                             cost: getState().product.hash[2].cost,
                          }),
                          ModelOrderItemFactory({
                              id: getUniqueTmpId(),
@@ -32,14 +32,6 @@ export function create() {
                              qty: 3,
                              costPercent: getState().product.hash[3].cost,
                          }),
-                         {
-                             id: getUniqueTmpId(),
-                             productId: 2,
-                             qty: 1,
-                             note: '',
-                             cost: getState().product.hash[2].cost,
-                             discount: 0,
-                         }
                      ],
 
                      isNew: true,

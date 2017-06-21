@@ -1,4 +1,5 @@
 import Exception from '../../../core/Exception';
+import ModelOrderItemBase from './base';
 import ModelOrderItemDepend from './depend';
 import ModelOrderItemIndepend from './independ';
 
@@ -15,6 +16,7 @@ export default function ModelOrderItemFactory(data) {
                 return ModelOrderItemDepend(data);
             case 'ModelOrderItemIndepend':
                 return ModelOrderItemIndepend(data);
+
             default:
                 Exception({
                     desc: 'ModelOrderItemFactory: не удалось определить класс, экземпляр которого нужно создать',
@@ -39,6 +41,9 @@ ModelOrderItemFactory.getInstanceClass = function(obj) {
         }
         if (ModelOrderItemIndepend.instanceOf(obj)) {
             return 'ModelOrderItemIndepend';
+        }
+        if (ModelOrderItemBase.instanceOf(obj)) {
+            return 'ModelOrderItemBase';
         }
     }
     catch(e) {}

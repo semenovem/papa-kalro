@@ -51,7 +51,7 @@ export default connect(
     }),
     dispatch => ({
         /**
-         * Создает новый товар/услугу в заказе
+         * Создает новый продукт в заказе
          * @param {ModelProductBase.id[]} productIdLi
          */
         itemAdd: productIdLi => {
@@ -65,7 +65,7 @@ export default connect(
             })
         },
         /**
-         * Удаляет товар/услугу
+         * Удаляет продукт
          * @param {ModelOrderBase.id[]} itemLiRemove
          */
         itemRemove: (itemLiRemove) => {

@@ -19,7 +19,23 @@ export function clientTelCreate(dispatch, getState) {
 }
 
 /**
- * Добавляет товар/услугу к заказу
+ * Добавляет пустую позицию в заказ
+ * @param {String} section раздел, в котором находится позиция заказа
+ */
+export function addItemEmpty(section) {
+    return (dispatch) => {
+        dispatch({
+            type: 'ORDER.EDIT.ITEM.ADD',
+            itemLi: [ModelOrderItemBase({
+                id: getUniqueTmpId(),
+                section,
+            })]
+        })
+    }
+}
+
+/**
+ * Добавляет продукт к заказу
  * @param {ModelProductBase.id[]} idLi
  * @returns {function(*, *)}
  */

@@ -17,10 +17,14 @@ import {
 } from '../../../../helper/money';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import {addItemEmpty as actionAddItemEmpty} from '../../../../actions/order/edit';
+import {col as styleCol} from './_style';
+import ModelOrderItemFactory from '../../../../model/order/item/factory';
 
 /**
  * Показывает список выбранных товаров/услуг
- * @param {ModelOrderBase[]} props.itemLi
+ * @param {ModelOrderBase[]} props.itemLi позиции заказа
+ * @param {String} section раздел, список которого выводится
  */
 class Main extends Component {
     constructor(props) {
@@ -47,51 +51,15 @@ class Main extends Component {
             editOptionLi: null,
             editHandler: null,
             editField: null,
-
-            /**
-             * Показать пустые строки, в которых можно выбрать item.
-             */
-            rowEmptyLi: []
         }
     }
-    styleColNum = {
-        paddingLeft: '5px',
-        paddingRight: '5px',
-        width: '10px',
-    };
-    styleColName = {
-        paddingLeft: '5px',
-        paddingRight: '5px',
-    };
-    styleColUnit = {
-        paddingLeft: '5px',
-        paddingRight: '5px',
-        width: '50px',
-        textAlign: 'center'
-    };
-    styleColQty = {
-        paddingLeft: '5px',
-        paddingRight: '5px',
-        width: '50px',
-        textAlign: 'center'
-    };
-    styleColCost = {
-        paddingLeft: '5px',
-        paddingRight: '5px',
-        width: '50px',
-        textAlign: 'right'
-    };
-    styleColDiscount = {
-        paddingLeft: '5px',
-        paddingRight: '5px',
-        width: '50px',
-        textAlign: 'right'
-    };
-    styleColTotal = {
-        paddingLeft: '5px',
-        paddingRight: '5px',
-        width: '80px',
-        textAlign: 'right'
+
+    /**
+     * inline style
+     * @type {{col}}
+     */
+    style = {
+        col: styleCol
     };
 
     /**
@@ -146,7 +114,7 @@ class Main extends Component {
     };
 
     /**
-     * Изменяет кол-во товара/услуги
+     * Изменяет кол-во "продукта"
      * @param {Number} value выбранное значение
      */
     changeQty = (value) => {
@@ -157,7 +125,7 @@ class Main extends Component {
     };
 
     /**
-     * Изменяет стоимость товара/услуги
+     * Изменяет стоимость "продукта"
      * @param {Number} value новая стоимость
      */
     changeCost = (value) => {
@@ -168,20 +136,24 @@ class Main extends Component {
     };
 
     /**
-     * Добавить строку в таблицу
+     * Добавить пустую позицию в заказ (без указания "продукта")
      */
-    addItem = () => {
-        console.log ('23434');
-
-
+    addItemEmpty = () => {
+        this.props.addItemEmpty(this.props.section);
     };
 
     /**
      * Одна строка в таблице
-     * @param {ModelOrderItemBase} item
+     * @param {ModelOrderItemBase|ModelOrderItemDepend|ModelOrderItemIndepend} item
      * todo заменить index на css счетчик номеров строк
      */
     createRow = (item, index) => {
+        switch (ModelOrderItemFactory.getInstanceClass(item)) {
+            case 'ModelOrderItemBase':
+                return this.rowBase(item, index);
+        }
+
+
         const product = this.props.productHash[item.productId];
         const unit = this.props.unitHash[product.unitId];
 
@@ -189,31 +161,65 @@ class Main extends Component {
             <TableRow key={item.id}>
 
                 <TableRowColumn
-                    style={this.styleColNum}
+                    style={this.style.col.num}
                     className="order-edit-item-list-main-row-counter"
                 >{index + 1}</TableRowColumn>
 
-                <TableRowColumn style={this.styleColName}>{product.nameS}</TableRowColumn>
-                {this.state.colSet.visibleSet.unit && <TableRowColumn style={this.styleColUnit}>{unit.nameS}</TableRowColumn>}
+                <TableRowColumn style={this.style.col.name}>{product.nameS}</TableRowColumn>
+                {this.state.colSet.visibleSet.unit && <TableRowColumn style={this.style.col.unit}>{unit.nameS}</TableRowColumn>}
 
-                <TableRowColumn style={this.styleColQty}>
+                <TableRowColumn style={this.style.col.qty}>
                     {item.qty}
                 </TableRowColumn>
 
-                <TableRowColumn style={this.styleColCost}>
+                <TableRowColumn style={this.style.col.cost}>
                     {moneyFormat(item.cost)}
                 </TableRowColumn>
 
-                <TableRowColumn style={this.styleColDiscount}>
+                <TableRowColumn style={this.style.col.discount}>
                     {item.discount ? item.discount : ''}
                 </TableRowColumn>
 
-                <TableRowColumn style={this.styleColTotal}>
+                <TableRowColumn style={this.style.col.total}>
                     {moneyFormat(item.cost * item.qty)}
                 </TableRowColumn>
             </TableRow>
         )
     };
+
+
+    /**
+     * Одна строка в таблице
+     * @param {ModelOrderItemBase} item
+     * todo заменить index на css счетчик номеров строк
+     */
+    rowBase = (item, index) => {
+        return (
+            <TableRow key={item.id}>
+
+                <TableRowColumn
+                    style={this.style.col.num}
+                    className="order-edit-item-list-main-row-counter"
+                >{index + 1}</TableRowColumn>
+
+                <TableRowColumn style={this.style.col.name}>Выберите ...</TableRowColumn>
+
+                <TableRowColumn style={this.style.col.qty}>
+                    {item.qty}
+                </TableRowColumn>
+
+                <TableRowColumn style={this.style.col.cost}> </TableRowColumn>
+
+                <TableRowColumn style={this.style.col.discount}>
+                    {item.discount ? item.discount : ''}
+                </TableRowColumn>
+
+                <TableRowColumn style={this.style.col.total}> </TableRowColumn>
+            </TableRow>
+        )
+    };
+
+
 
     /**
      * Итоговая строка
@@ -228,29 +234,22 @@ class Main extends Component {
         return (
             <TableRow key={'total'}>
 
-                <TableRowColumn style={this.styleColNum}> </TableRowColumn>
-                <TableRowColumn style={this.styleColName}>Итого</TableRowColumn>
-                {this.state.colSet.visibleSet.unit && <TableRowColumn style={this.styleColUnit}> </TableRowColumn>}
-                <TableRowColumn style={this.styleColQty}>
+                <TableRowColumn style={this.style.col.num}> </TableRowColumn>
+                <TableRowColumn style={this.style.col.name}>Итого</TableRowColumn>
+                {this.state.colSet.visibleSet.unit && <TableRowColumn style={this.style.col.unit}> </TableRowColumn>}
+                <TableRowColumn style={this.style.col.qty}>
                     {qty}
                 </TableRowColumn>
 
-                <TableRowColumn style={this.styleColCost}> </TableRowColumn>
-                <TableRowColumn style={this.styleColDiscount}> </TableRowColumn>
+                <TableRowColumn style={this.style.col.cost}> </TableRowColumn>
+                <TableRowColumn style={this.style.col.discount}> </TableRowColumn>
 
-                <TableRowColumn style={this.styleColTotal}>
+                <TableRowColumn style={this.style.col.total}>
                     {moneyFormat(total)}
                 </TableRowColumn>
             </TableRow>
         )
     };
-
-
-    rowEmpty = () => {
-        return
-    };
-
-
 
     render() {
         return (
@@ -258,25 +257,27 @@ class Main extends Component {
                 <Table onCellClick={this.onCellClick}>
                     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                         <TableRow>
-                            <TableHeaderColumn style={this.styleColNum}>№</TableHeaderColumn>
-                            <TableHeaderColumn style={this.styleColName}>Наименование</TableHeaderColumn>
-                            {this.state.colSet.visibleSet.unit && <TableHeaderColumn style={this.styleColUnit}>Ед.изм.</TableHeaderColumn>}
-                            <TableHeaderColumn style={this.styleColQty}>Кол-во</TableHeaderColumn>
-                            <TableHeaderColumn style={this.styleColCost}>Цена</TableHeaderColumn>
-                            <TableHeaderColumn style={this.styleColDiscount}>Скидка</TableHeaderColumn>
-                            <TableHeaderColumn style={this.styleColTotal}>Всего</TableHeaderColumn>
+                            <TableHeaderColumn style={this.style.col.num}>№</TableHeaderColumn>
+                            <TableHeaderColumn style={this.style.col.name}>Наименование</TableHeaderColumn>
+                            {this.state.colSet.visibleSet.unit &&
+                            <TableHeaderColumn style={this.style.col.unit}>Ед.изм.</TableHeaderColumn>}
+                            <TableHeaderColumn style={this.style.col.qty}>Кол-во</TableHeaderColumn>
+                            <TableHeaderColumn style={this.style.col.cost}>Цена</TableHeaderColumn>
+                            <TableHeaderColumn style={this.style.col.discount}>Скидка</TableHeaderColumn>
+                            <TableHeaderColumn style={this.style.col.total}>Всего</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
 
                     {this.props.itemLi.length &&
+
                     <TableBody displayRowCheckbox={false}>
-                        {this.props.itemLi.map(this.createRow)}
+                        {this.props.itemLi.map(this.createRow, this)}
                         {this.props.itemLi.length && this.createRowTotal(this.props.itemLi)}
                     </TableBody>
                     }
                 </Table>
 
-                <FloatingActionButton mini={true} style={{}} onTouchTap={this.addItem}>
+                <FloatingActionButton mini={true} style={{}} onTouchTap={this.addItemEmpty}>
                     <ContentAdd />
                 </FloatingActionButton>
 
@@ -331,6 +332,12 @@ export default connect(
             id,
             cost,
         }),
+
+        /**
+         * Добавляет пустую позицию в заказ
+         * @param {String} section название раздела
+         */
+        addItemEmpty: (section) => dispatch(actionAddItemEmpty(section))
     })
 )(Main);
 

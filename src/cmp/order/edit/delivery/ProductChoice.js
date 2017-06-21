@@ -52,13 +52,13 @@ export default connect(
     }),
     dispatch => ({
         /**
-         * Создает новый товар/услугу в заказе
+         * Создает новый продукт в заказе
          * @param {ModelProductBase.id[]} idLi
          */
         itemAdd: idLi => dispatch(addItemToOrder(idLi)),
 
         /**
-         * Удаляет товар/услугу
+         * Удаляет продукт
          * todo удаление позиции можно только в таблице с заказами=
          * @param {ModelOrderBase.id[]} idLi
          */
