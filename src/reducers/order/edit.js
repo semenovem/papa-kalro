@@ -238,14 +238,11 @@ export default function (state = initialState, action) {
             break;
 
         /**
-         * Изменяет стоимость товара/услуги в заказе
+         * Изменяет стоимость "продукта" в заказе
          * @param {Number} action.id изменяемая запись
          * @param {Number} action.cost стоимость
          */
         case 'ORDER.EDIT.ITEM.COST.CHANGE':
-
-            console.log('ORDER.EDIT.ITEM.COST.CHANGE', action);
-
             newState = {
                 ...state,
                 itemLi: state.itemLi.map(item => {
@@ -253,6 +250,26 @@ export default function (state = initialState, action) {
                         item = {
                             ...item,
                             cost: action.cost
+                        }
+                    }
+                    return item;
+                })
+            };
+            break;
+
+        /**
+         * Изменяет стоимость вещей, от которых рассчитывается стоимость "продукта"
+         * @param {Number} action.id изменяемая запись
+         * @param {Number} action.thingCost стоимость
+         */
+        case 'ORDER.EDIT.ITEM.THING_COST.CHANGE':
+            newState = {
+                ...state,
+                itemLi: state.itemLi.map(item => {
+                    if (action.id === item.id) {
+                        item = {
+                            ...item,
+                            thingCost: action.thingCost
                         }
                     }
                     return item;

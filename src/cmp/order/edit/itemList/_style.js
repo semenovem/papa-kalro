@@ -20,6 +20,12 @@ export const col = {
         width: '50px',
         textAlign: 'center'
     },
+    thingCost: {
+        paddingLeft: '5px',
+        paddingRight: '5px',
+        width: '50px',
+        textAlign: 'center'
+    },
     cost: {
         paddingLeft: '5px',
         paddingRight: '5px',
@@ -35,7 +41,7 @@ export const col = {
     total: {
         paddingLeft: '5px',
         paddingRight: '5px',
-        width: '80px',
+        width: '70px',
         textAlign: 'right'
     }
-}
+};

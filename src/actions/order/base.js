@@ -28,9 +28,10 @@ export function create() {
                          }),
                          ModelOrderItemFactory({
                              id: getUniqueTmpId(),
-                             productId: 3,
+                             productId: 13,
                              qty: 3,
-                             costPercent: getState().product.hash[3].cost,
+                             costPercent: getState().product.hash[13].costPercent,
+                             thingCost: 2354465
                          }),
                      ],
 

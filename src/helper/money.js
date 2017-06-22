@@ -8,7 +8,7 @@
  */
 export function format(sum, currency, dec, round) {
     // todo добавить форматирование числа
-    return (sum / 100).toLocaleString();
+    return (Math.floor(sum / 100)).toLocaleString();
 }
 
 
@@ -30,4 +30,14 @@ export function transformToRub(sum, currency) {
  */
     export function transformToKop(sum, currency) {
     return sum * 100;
+}
+
+/**
+ * Вычисляет процент от стоимости
+ * @param {Number} sum сумма в копейках
+ * @param {Number} percent процент
+ * @returns Number
+ */
+export function calcPercent(sum, percent) {
+    return Math.floor(sum/100*percent);
 }

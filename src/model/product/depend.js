@@ -14,6 +14,7 @@ export default function ModelProductDepend(data) {
         /**
          * @namespace ModelProductDepend
          * @typedef ModelProductDepend
+         * @augments ModelProductBase
          */
         const obj = {
             ...base,

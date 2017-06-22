@@ -17,6 +17,7 @@ export default function ModelOrderItemIndepend(data) {
         /**
          * @namespace ModelOrderItemIndepend
          * @typedef ModelOrderItemIndepend
+         * @augments ModelOrderItemBase
          */
         const model = {
             ...base,

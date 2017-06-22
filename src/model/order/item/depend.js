@@ -23,6 +23,7 @@ export default function ModelOrderItemDepend(data) {
         /**
          * @namespace ModelOrderItemDepend
          * @typedef ModelOrderItemDepend
+         * @augments ModelOrderItemBase
          */
         const model = {
             ...base,
@@ -40,9 +41,10 @@ export default function ModelOrderItemDepend(data) {
 
             /**
              * @type Number стоимость вещей(товаров), от которых считается стоимость
+             * @optional
              * val >= 0
              */
-            thingCost: 0,
+            thingCost: 'thingCost' in data ? data.thingCost : 0,
         };
         
 

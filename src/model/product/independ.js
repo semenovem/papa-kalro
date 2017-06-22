@@ -14,6 +14,7 @@ export default function ModelProductIndepend(data) {
         /**
          * @namespace ModelProductIndepend
          * @typedef ModelProductIndepend
+         * @augments ModelProductBase
          */
         const obj = {
             ...base,
