@@ -52,6 +52,15 @@ class Main extends Component {
             editOptionLi: null,
             editHandler: null,
             editField: null,
+
+            /**
+             * Данные для редактирования "продукта"
+             */
+            editProductOpen: false,
+            editProductAnchorEl: null,
+            editProductValue: null,
+            editProductHandler: null,
+
         }
     }
 
@@ -152,6 +161,33 @@ class Main extends Component {
         this.setState({
             editOpen: false,
         });
+    };
+    /**
+     * Обработчик закрытия Popover
+     */
+    handleRequestCloseEditName = () => {
+
+        this.itemSelected = null;
+        this.setState({
+            editProductOpen: false,
+        });
+    };
+
+
+
+    /**
+     * Изменяет выбранный "продукт"
+     * @param {Model} value выбранное значение
+     */
+    changeProduct = (value) => {
+
+        console.log('changeProduct');
+
+
+        // this.props.changeQty(this.itemSelected.id, value);
+        // this.setState({
+        //     editOpen: false
+        // });
     };
 
     /**
@@ -355,6 +391,27 @@ class Main extends Component {
                     <ContentAdd />
                 </FloatingActionButton>
 
+
+                {/* изменение выбранного "продукта" */}
+                <Popover
+                    open={this.state.editProductOpen}
+                    anchorEl={this.state.editProductAnchorEl}
+                    anchorOrigin={{
+                        horizontal: 'left',
+                        vertical: 'bottom'
+                    }}
+                    targetOrigin={{
+                        horizontal: 'left',
+                        vertical: 'top'
+                    }}
+                    onRequestClose={this.handleRequestCloseEditName}
+                    animation={PopoverAnimationVertical}
+                >
+                    askfsdfsdfasd fsadjfhasf
+                </Popover>
+
+
+                {/* изменение значений - кол-во, цена, сумма */}
                 <Popover
                     open={this.state.editOpen}
                     anchorEl={this.state.editAnchorEl}
@@ -376,6 +433,8 @@ class Main extends Component {
                         change={this.state.editHandler}
                     />
                 </Popover>
+
+
             </div>
         )
     }
