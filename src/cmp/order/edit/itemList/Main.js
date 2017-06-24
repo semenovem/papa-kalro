@@ -94,21 +94,24 @@ class Main extends Component {
         const classModelName = ModelOrderItemFactory.getInstanceClass(this.itemSelected);
 
         // общие поля для классов
-        // name
-        if (colKey === 2) {
+        // product.name
+        if (colKey === 1) {
             // проверить условия, что бы дать возможность выбрать продукт из списка
 
             if (classModelName === 'ModelOrderItemBase') {
-                console.log('asdfsdfsdf');
+                console.log('asdfsdfsdf1111');
+
+                return;
             }
         }
 
         if (classModelName === 'ModelOrderItemBase') {
+            // не предусмотренно других действий, сначала нужно определиться с типом записи
             return;
         }
 
         // qty
-        if (colKey === 4) {
+        if (colKey === 3) {
             this.setState({
                 editOpen: true,
                 editOptionLi: [1, 2, 3],
@@ -122,9 +125,8 @@ class Main extends Component {
         }
 
         // далее, зависит от класса экземпляра
-
         // thingCost. актуально для зависимой позиции
-        if (colKey === 5 && classModelName === 'ModelOrderItemDepend') {
+        if (colKey === 4 && classModelName === 'ModelOrderItemDepend') {
             this.setState({
                 editOpen: true,
                 editOptionLi: [],
@@ -138,7 +140,7 @@ class Main extends Component {
         }
 
         // cost
-        if (colKey === 6 && classModelName === 'ModelOrderItemIndepend') {
+        if (colKey === 5 && classModelName === 'ModelOrderItemIndepend') {
             this.setState({
                 editOpen: true,
                 editOptionLi: [],

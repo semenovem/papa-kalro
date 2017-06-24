@@ -150,6 +150,8 @@ class ListInteger extends Component {
         this.props.change(parseInt(this.state.fieldText));
     };
 
+
+
     render() {
         return (
             <div className="choice-list-value">
@@ -164,6 +166,7 @@ class ListInteger extends Component {
                         onChange={this.onChangeField}
                         errorText={!this.state.fieldEmpty && !this.state.fieldValid && 'Можно ввести только число'}
                         value={this.state.fieldText}
+                        ref={el => console.log('el:', el)}
                     />
 
                     <IconButton
